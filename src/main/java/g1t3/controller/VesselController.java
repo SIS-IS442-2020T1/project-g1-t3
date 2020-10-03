@@ -28,12 +28,12 @@ public class VesselController {
         return service.getVessels();
     }
 
-    @GetMapping("/vessel/{id}")
-    public Vessel findVesselById(@PathVariable int id){
+    @RequestMapping(value = "/vesselid/{id}", method = RequestMethod.GET)
+    public Vessel findVesselById(@PathVariable Integer id){
         return service.getVesselsById(id);
     }
 
-    @GetMapping("/vessel/{date}")
+    @GetMapping("/vesseldate/{date}")
     public Vessel findVesselByDate(@PathVariable String date){
         return service.getVesselsByBthgDt(date);
     }
