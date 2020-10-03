@@ -23,6 +23,15 @@ public class Vessel {
     private String fullVslM;
     private String abbrVslM;
     private String fullInVoyN;
+    private String inVoyN;
+    private String fullOutVoyN;
+    private String outVoyN;
+    private String shiftSeqN;
+    private String bthgDt;
+    private String unbthgDt;
+    private String berthN;
+    private String status;
+    private String abbrTerminalM;
 }
 //    "imoN": 9400215,
 //            "fullVslM": "AGLAIA",
@@ -37,4 +46,3 @@ public class Vessel {
 //            "berthN": null,
 //            "status": "BERTHING",
 //            "abbrTerminalM": "PPT5"
-}
