@@ -24,9 +24,9 @@ public class VesselService {
         return repository.findAll();
     }
 
-    public Vessel getVesselsById(int id){
-        return repository.findById(id).orElse(null);
-    }
+//    public Vessel getVesselsById(int id){
+//        return repository.findById(id).orElse(null);
+//    }
 
     public Vessel getVesselsByBthgDt(String date){
         return repository.findBybthgDt(date);
