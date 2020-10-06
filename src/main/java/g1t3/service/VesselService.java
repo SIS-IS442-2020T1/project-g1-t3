@@ -4,6 +4,7 @@ import g1t3.entity.Vessel;
 import g1t3.repository.VesselRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,12 +25,14 @@ public class VesselService {
         return repository.findAll();
     }
 
-//    public Vessel getVesselsById(int id){
-//        return repository.findById(id).orElse(null);
-//    }
+    @Transactional
+    public String replaceCurrentDay(String date){
+        return repository.deleteByBthgDtContaining(date);
+//        return "Vessel has been updated!";
+    }
 
-    public Vessel getVesselsByBthgDt(String date){
-        return repository.findBybthgDt(date);
+    public List<Vessel> getVesselsByBthgDt(String date){
+        return repository.findByBthgDtContaining(date);
     }
 
 }

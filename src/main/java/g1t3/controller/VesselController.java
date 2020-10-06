@@ -28,13 +28,13 @@ public class VesselController {
         return service.getVessels();
     }
 
-//    @RequestMapping(value = "/vesselid/{id}", method = RequestMethod.GET)
-//    public Vessel findVesselById(@PathVariable Integer id){
-//        return service.getVesselsById(id);
-//    }
-
     @GetMapping("/vesseldate/{date}")
-    public Vessel findVesselByDate(@PathVariable String date){
+    public List<Vessel> findVesselByDate(@PathVariable String date){
         return service.getVesselsByBthgDt(date);
+    }
+
+    @DeleteMapping("/vesseldelete/{date}")
+    public String replaceVesselForCurrentDate(@PathVariable String date){
+        return service.replaceCurrentDay(date);
     }
 }

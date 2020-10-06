@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface VesselRepository extends JpaRepository<Vessel, VesselPrimary> {
-    Vessel findBybthgDt(String date);
+    List<Vessel> findByBthgDtContaining(String date);
+    String deleteByBthgDtContaining(String date);
 }
