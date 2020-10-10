@@ -1,6 +1,7 @@
 package g1t3.service;
 
 import g1t3.entity.*;
+import g1t3.entity.composite.*;
 import g1t3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,15 +30,21 @@ public class SubscriptionService{
         return repository.findByEmail(email);
     }
 
-    public List<Subscription> findByVessel(String vesselId){
-        return repository.findByVesselId(vesselId);
+//    public List<Subscription> findByVessel(String vesselId){
+//        return repository.findByVesselId(vesselId);
+//    }
+    public List<Subscription> findByVessel(String abbrVslM, String inVoyN){
+        return repository.findByAbbrVslMAndInVoyN(abbrVslM, inVoyN);
     }
 
-    public void deleteSubscription(String Id) {
-        repository.deleteById(Id);
-//        return "product removed !! " + id;
+//    public void deleteSubscription(String Id) {
+//        repository.deleteById(Id);
+////        return "product removed !! " + id;
+//    }
+    public void deleteSubscription(SubscriptionPrimary subIds) {
+        repository.deleteById(subIds);
     }
-//
+
 //    public Subscription updateSubscription(Subscription subscription) {
 //        Subscription existingProduct = repository.findById(Subscription.getId()).orElse(null);
 //        existingProduct.setName(product.getName());

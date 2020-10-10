@@ -1,6 +1,7 @@
 package g1t3.controller;
 
 import g1t3.entity.*;
+import g1t3.entity.composite.*;
 import g1t3.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,20 +34,17 @@ public class SubscriptionController{
         return service.findByUser(email);
     }
 
-    @GetMapping("/SubscriptionByVessel/{vesselId}")
-    public List<Subscription> findSubscriptionByVesselId(@PathVariable String vesselId) {
-        return service.findByVessel(vesselId);
+    @GetMapping ("/SubscriptionByVessel/{abbrVslM}/{inVoyN}")
+    public List<Subscription> findSubscriptionByVesselId(@PathVariable String abbrVslM,@PathVariable String inVoyN) {
+        return service.findByVessel(abbrVslM, inVoyN);
     }
 
-//
-////    @PutMapping("/update")
-////    public Subscription updateSubscription(@RequestBody Subscription Subscription) {
-////        return service.updateSubscription(Subscription);
-////    }
-//
-    @DeleteMapping("/delete/{subId}")
-    public void deleteSubscription(@PathVariable String subId){
-        service.deleteSubscription(subId);
+
+    @DeleteMapping("/delete")
+    public void deleteSubscription(@RequestBody SubscriptionPrimary subIds ){
+        service.deleteSubscription(subIds);
     }
+
+
 }
 
