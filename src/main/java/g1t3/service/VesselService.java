@@ -26,7 +26,7 @@ public class VesselService {
     }
 
     @Transactional
-    public String replaceCurrentDay(String date){
+    public String deleteCurrentDay(String date){
         return repository.deleteByBthgDtContaining(date);
 //        return "Vessel has been updated!";
     }
@@ -35,4 +35,11 @@ public class VesselService {
         return repository.findByBthgDtContaining(date);
     }
 
+    public Boolean checkVesselsByBthgDt(String date){
+        List<Vessel> vesselList = repository.findByBthgDtContaining(date);
+        if(vesselList.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 }

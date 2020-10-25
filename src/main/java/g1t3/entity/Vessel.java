@@ -29,7 +29,7 @@ public class Vessel{
     @Id
     private String inVoyN;
     private int imoN;
-    @Length(max = 20)
+    @Column(columnDefinition = "LONGBLOB")
     private String fullVslM;
     @Length(max = 12)
     private String fullInVoyN;
@@ -49,6 +49,58 @@ public class Vessel{
     private String status;
     @Length(max = 6)
     private String abbrTerminalM;
+
+    public String getAbbrVslM(){
+        return abbrVslM;
+    }
+
+    public String getInVoyN(){
+        return inVoyN;
+    }
+
+    public int getImoN(){
+        return imoN;
+    }
+
+    public String getFullVslM(){
+        return fullVslM;
+    }
+
+    public String getFullInVoyN(){
+        return fullInVoyN;
+    }
+
+    public String getFullOutVoyN(){
+        return fullOutVoyN;
+    }
+
+    public String getOutVoyN(){
+        return outVoyN;
+    }
+
+    public String getShiftSeqN(){
+        return shiftSeqN;
+    }
+
+    public String getBthgDt(){
+        return bthgDt;
+    }
+
+    public String getUnbthgDt(){
+        return unbthgDt;
+    }
+
+    public String getBerthN(){
+        return berthN;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public String getAbbrTerminalM(){
+        return abbrTerminalM;
+    }
 }
 //    "imoN": 9400215,
 //            "fullVslM": "AGLAIA",

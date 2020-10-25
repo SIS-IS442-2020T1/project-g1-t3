@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 
 public class VesselPrimary implements Serializable {
 
-    @Length(max = 20)
+    @Column(columnDefinition = "LONGBLOB")
     private String abbrVslM;
     @Length(max = 16)
     private String inVoyN;

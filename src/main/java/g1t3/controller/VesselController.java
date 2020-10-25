@@ -33,8 +33,13 @@ public class VesselController {
         return service.getVesselsByBthgDt(date);
     }
 
+    @GetMapping("/checkvesseldate/{date}")
+    public Boolean checkVesselByDate(@PathVariable String date){
+        return service.checkVesselsByBthgDt(date);
+    }
+
     @DeleteMapping("/vesseldelete/{date}")
-    public String replaceVesselForCurrentDate(@PathVariable String date){
-        return service.replaceCurrentDay(date);
+    public String deleteVesselForCurrentDate(@PathVariable String date){
+        return service.deleteCurrentDay(date);
     }
 }
