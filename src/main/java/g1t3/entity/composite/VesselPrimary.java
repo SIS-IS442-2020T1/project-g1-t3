@@ -14,7 +14,8 @@ import java.io.Serializable;
 
 public class VesselPrimary implements Serializable {
 
-    @Column(columnDefinition = "LONGBLOB")
+//    @Column(columnDefinition = "LONGBLOB")
+    @Length(max = 16)
     private String abbrVslM;
     @Length(max = 16)
     private String inVoyN;

@@ -1,18 +1,18 @@
 package g1t3.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Base64;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "WEBSERVICEINSTRUCTION_TBL")
 
 public class WebserviceInstructions {
@@ -22,9 +22,8 @@ public class WebserviceInstructions {
     private int dailyUpdate;
     private int currentDayUpdate;
 
-    public Integer getId(){
-        return id;
-    }
+    public Integer getId(){return id; }
+
     public String getApiKey(){
         return apiKey;
     }
@@ -35,5 +34,12 @@ public class WebserviceInstructions {
 
     public Integer getCurrentDayUpdate(){
         return currentDayUpdate;
+    }
+
+    public WebserviceInstructions hashingApiKey(){
+        String apiKeyExtract = this.getApiKey();
+        String encodedString = Base64.getEncoder().encodeToString(apiKeyExtract.getBytes());
+        WebserviceInstructions webserviceInstructions = new WebserviceInstructions(this.id, encodedString, this.dailyUpdate, this.currentDayUpdate);//Do not remove or change this line, there is no error. It is a bug in lombok
+        return webserviceInstructions;
     }
 }

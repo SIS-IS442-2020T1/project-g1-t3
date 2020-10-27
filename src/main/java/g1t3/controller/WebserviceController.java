@@ -11,9 +11,14 @@ public class WebserviceController {
     @Autowired
     private WebserviceService service;
 
+    @PostMapping("/addWebservice/")
+    public WebserviceInstructions saveWebserviceController(@RequestBody WebserviceInstructions webserviceInstructions){
+        return service.saveWebservice(webserviceInstructions.hashingApiKey());
+    }
+
     @PostMapping("/updateWebservice/")
     public String replaceWebserviceInstructionsController(@RequestBody WebserviceInstructions webserviceInstructions){
-        return service.replaceWebserviceInstructions(webserviceInstructions);
+        return service.replaceWebserviceInstructions(webserviceInstructions.hashingApiKey());
     }
 
     @GetMapping("/getById/{id}")

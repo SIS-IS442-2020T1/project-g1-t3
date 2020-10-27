@@ -29,7 +29,8 @@ public class Vessel{
     @Id
     private String inVoyN;
     private int imoN;
-    @Column(columnDefinition = "LONGBLOB")
+//    @Column(columnDefinition="text")
+    @Length(max = 255)
     private String fullVslM;
     @Length(max = 12)
     private String fullInVoyN;

@@ -9,6 +9,7 @@ import g1t3.service.WebserviceService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.io.*;
 import java.util.List;
@@ -52,8 +53,9 @@ public class ScheduleTaskDaily {
     @Scheduled(initialDelay = 1000, fixedDelay = 1000)
     public void dataForDailyUpdates() throws InterruptedException {
         log.info("The time is now {}", dateFormat.format(new Date()));
-//        System.out.println("Function 2");
-        String apiKey = getApiKey(1);
+        String encodedString = getApiKey(1);
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        String apiKey = new String(decodedBytes);
         LocalDate now = LocalDate.now();
         LocalDate start = now.plusDays(1);
         LocalDate end = now.plusDays(6);
