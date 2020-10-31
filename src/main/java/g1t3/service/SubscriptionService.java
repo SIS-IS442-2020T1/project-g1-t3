@@ -5,8 +5,15 @@ import g1t3.entity.composite.*;
 import g1t3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.*;
 
-import java.util.List;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 @Service
 public class SubscriptionService{
@@ -45,13 +52,7 @@ public class SubscriptionService{
         repository.deleteById(subIds);
     }
 
-//    public Subscription updateSubscription(Subscription subscription) {
-//        Subscription existingProduct = repository.findById(Subscription.getId()).orElse(null);
-//        existingProduct.setName(product.getName());
-//        existingProduct.setQuantity(product.getQuantity());
-//        existingProduct.setPrice(product.getPrice());
-//        return repository.save(existingProduct);
-//    }
+
 
 
 }

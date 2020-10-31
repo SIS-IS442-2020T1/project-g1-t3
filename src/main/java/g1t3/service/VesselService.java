@@ -25,6 +25,10 @@ public class VesselService {
         return repository.findAll();
     }
 
+    public Vessel findByAbbrVslMAndInVoyN(String abbrVslM, String inVoyN){
+        return repository.findByAbbrVslMAndInVoyN(abbrVslM, inVoyN);
+    }
+
     @Transactional
     public String deleteCurrentDay(String date){
         return repository.deleteByBthgDtContaining(date);

@@ -1,10 +1,8 @@
 package g1t3.webserviceBackend;
 
-import g1t3.entity.Vessel;
-import g1t3.entity.WebserviceInstructions;
+import g1t3.entity.*;
 import g1t3.repository.WebserviceRepository;
-import g1t3.service.VesselService;
-import g1t3.service.WebserviceService;
+import g1t3.service.*;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -35,6 +33,9 @@ public class ScheduleTaskDaily {
     @Autowired
     private WebserviceService service;
     private WebserviceRepository repository;
+
+    @Autowired
+    private EmailSubscribers EmailSubscribers;
 
     public Integer getDailyFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
@@ -74,6 +75,7 @@ public class ScheduleTaskDaily {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
                 vesselList.add(vessel);
+                EmailSubscribers.toEmailIfBerthOrDepartTimeChange(vessel);
             }
 //            System.out.println(vesselList.toString());
             replaceDataForDaily(vesselList);

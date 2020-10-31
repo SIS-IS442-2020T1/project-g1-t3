@@ -37,6 +37,9 @@ public class ScheduleTaskCurrentDay {
     private WebserviceService service;
     private WebserviceRepository repository;
 
+    @Autowired
+    private EmailSubscribers EmailSubscribers;
+
     public Integer getCurrentDayFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
         return webserviceInstructionsById.getCurrentDayUpdate();
@@ -76,6 +79,7 @@ public class ScheduleTaskCurrentDay {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
                 vesselList.add(vessel);
+                EmailSubscribers.toEmailIfBerthOrDepartTimeChange(vessel);
             }
             replaceDataForCurrentDay(vesselList);//, date);
 
