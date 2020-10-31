@@ -7,13 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Service
 public class SubscriptionService{
@@ -37,17 +30,10 @@ public class SubscriptionService{
         return repository.findByEmail(email);
     }
 
-//    public List<Subscription> findByVessel(String vesselId){
-//        return repository.findByVesselId(vesselId);
-//    }
     public List<Subscription> findByVessel(String abbrVslM, String inVoyN){
         return repository.findByAbbrVslMAndInVoyN(abbrVslM, inVoyN);
     }
 
-//    public void deleteSubscription(String Id) {
-//        repository.deleteById(Id);
-////        return "product removed !! " + id;
-//    }
     public void deleteSubscription(SubscriptionPrimary subIds) {
         repository.deleteById(subIds);
     }

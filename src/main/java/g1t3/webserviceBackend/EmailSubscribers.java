@@ -1,8 +1,7 @@
 package g1t3.webserviceBackend;
 
 import g1t3.entity.*;
-import g1t3.service.SubscriptionService;
-import g1t3.service.VesselService;
+import g1t3.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,16 +37,16 @@ public class EmailSubscribers {
         Vessel existingVessel = getExistingVessel(newVessel);
 
         if(existingVessel != null){
-            System.out.println("not null"); //for debugging
+            //System.out.println("not null"); //for debugging
             String oldBthgDt = existingVessel.getBthgDt();
             String oldUnbthgDt = existingVessel.getUnbthgDt();
             String newBthgDt = newVessel.getBthgDt();
             String newUnbthgDt = newVessel.getUnbthgDt();
 
             if(hasBerthOrDepartTimeChanged(oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt)){
-                System.out.println("BerthOrDepartTimeChanged"); //for debugging
+                //System.out.println("BerthOrDepartTimeChanged"); //for debugging
                 List<Subscription> subscriptionList = getSubscriptionListForVessel(newVessel);
-                System.out.println(subscriptionList); //for debugging
+                //System.out.println(subscriptionList); //for debugging
                 emailAllSubscribers(subscriptionList, oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt);
             }
         }
