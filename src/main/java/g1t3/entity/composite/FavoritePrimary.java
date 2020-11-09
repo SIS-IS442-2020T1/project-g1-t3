@@ -1,12 +1,9 @@
 package g1t3.entity.composite;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,7 +12,8 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubscriptionPrimary implements Serializable {
+public class FavoritePrimary implements Serializable {
+
     @NotNull
     @Email
     private String email;
@@ -40,15 +38,15 @@ public class SubscriptionPrimary implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof SubscriptionPrimary)) return false;
-        SubscriptionPrimary that = (SubscriptionPrimary) o;
-        return email.equals(that.email) &&
-                abbrVslM.equals(that.abbrVslM) &&
-                inVoyN.equals(that.inVoyN);
+        if (!(o instanceof FavoritePrimary)) return false;
+        FavoritePrimary that = (FavoritePrimary) o;
+        return Objects.equals(getEmail(), that.getEmail()) &&
+                Objects.equals(getAbbrVslM(), that.getAbbrVslM()) &&
+                Objects.equals(getInVoyN(), that.getInVoyN());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, abbrVslM, inVoyN);
+        return Objects.hash(getEmail(), getAbbrVslM(), getInVoyN());
     }
 }

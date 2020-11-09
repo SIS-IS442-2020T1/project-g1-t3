@@ -40,7 +40,7 @@ public class SubscriptionController{
     }
 
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteSubscription")
     public void deleteSubscription(@RequestBody SubscriptionPrimary subIds ){
         service.deleteSubscription(subIds);
     }
