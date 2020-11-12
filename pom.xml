@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>VesselScheduleTrackingApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>project-g1-t3</name>
 	<description>g1t3 oop project</description>
 
@@ -34,12 +35,14 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!-- JSTL for JSP -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>mysql</groupId>
