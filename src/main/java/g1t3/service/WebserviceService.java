@@ -17,6 +17,9 @@ public class WebserviceService {
     public WebserviceInstructions getWebserviceById(Integer id){return repository.findById(id).orElse(null);}
 
     public String replaceWebserviceInstructions(WebserviceInstructions webserviceInstructions){
+        if(getWebserviceById(webserviceInstructions.getId()) == null){
+            return "id doesnt exist";
+        }
         repository.deleteById(webserviceInstructions.getId());
         repository.save(webserviceInstructions);
         return "Data replaced.";

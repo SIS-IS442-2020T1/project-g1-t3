@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WebserviceRepository extends JpaRepository <WebserviceInstructions, Integer>{
-    String deleteById(int id);
+    WebserviceInstructions deleteById(int id);
 }
 
