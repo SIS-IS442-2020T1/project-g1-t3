@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,10 +84,12 @@ public class ScheduleTaskCurrentDay {
             }
             replaceDataForCurrentDay(vesselList);//, date);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JSONException e) {
+            System.out.println("Api link is currently down");
 //            System.out.printf("Error");
-        }
+        } catch (Exception e){
+            e.printStackTrace();
+    }
 
         Thread.sleep(getCurrentDayFixedRate(1));
     }

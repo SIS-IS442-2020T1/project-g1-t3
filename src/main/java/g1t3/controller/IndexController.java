@@ -10,8 +10,12 @@ public class IndexController {
 //    public String index() {
 //        return "index";
 //    }
+//    @GetMapping("/favourite")
+//    public String index() {
+//        return "favourite";
+//    }
 
-    @GetMapping("/")
+    @GetMapping("/favourite")
     public String index() {
         return "favourite";
     }
