@@ -1,8 +1,10 @@
 package g1t3.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@CrossOrigin()
 @Controller
 public class IndexController {
 
@@ -15,7 +17,7 @@ public class IndexController {
 //        return "favourite";
 //    }
 
-    @GetMapping("/favourite")
+    @GetMapping("/")
     public String index() {
         return "favourite";
     }

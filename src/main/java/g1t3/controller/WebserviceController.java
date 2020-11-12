@@ -5,6 +5,7 @@ import g1t3.service.WebserviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin()
 @RestController
 public class WebserviceController {
 
