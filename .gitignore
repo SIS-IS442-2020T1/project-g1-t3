@@ -33,7 +33,6 @@ build/
 .vscode/
 *.jar
 *.class
-*.jsp
 out/artifacts/VesselScheduleTrackingApp_war_exploded/WEB-INF/web.xml
 *.java
 *.sql
