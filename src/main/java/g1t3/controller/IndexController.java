@@ -17,14 +17,6 @@ public class IndexController {
     @Autowired
     private VesselService vesselService;
 
-    @GetMapping("/login")
-    public String index() {
-        return "index";
-    }
-//    @GetMapping("/favourite")
-//    public String index() {
-//        return "favourite";
-//    }
 
     @GetMapping("/myfavorite/{email}") // TODO: link email from login to favourite
     public String listFavorite(@PathVariable String email, Model model) {
@@ -43,19 +35,19 @@ public class IndexController {
         }
         model.addAttribute("vessels", vesselList);
         return "favorite";
+
     }
 
+    @GetMapping("/webservice")
+    public String webservice() {
+        return "webservice";
+    }
 
-//    @GetMapping("/list_contact")
-//    public String listContact(Model model) {
-//
-//        ContactBusiness business = new ContactBusiness();
-//        List<Contact> contactList = business.getContactList();
-//
-//        model.addAttribute("contacts", contactList);
-//
-//        return "contact";
-//    }
+    @GetMapping("/login")
+    public String login() {
+        return "index";
+    }
+
 
 
 
