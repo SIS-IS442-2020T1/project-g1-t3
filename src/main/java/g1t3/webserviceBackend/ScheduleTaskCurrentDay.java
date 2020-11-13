@@ -36,10 +36,12 @@ public class ScheduleTaskCurrentDay {
 
     @Autowired
     private WebserviceService service;
+
+    @Autowired
     private WebserviceRepository repository;
 
     @Autowired
-    private EmailSubscribers EmailSubscribers;
+    private DetectTimeChangeAndEmail DetectTimeChangeAndEmail;
 
     public Integer getCurrentDayFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
@@ -80,13 +82,13 @@ public class ScheduleTaskCurrentDay {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
                 vesselList.add(vessel);
-                EmailSubscribers.toEmailIfBerthOrDepartTimeChange(vessel);
+                DetectTimeChangeAndEmail.toEmailIfBerthOrDepartTimeChange(vessel);
             }
             replaceDataForCurrentDay(vesselList);//, date);
 
         } catch (JSONException e) {
             System.out.println("Api link is currently down");
-//            System.out.printf("Error");
+            System.out.printf("Error");
         } catch (Exception e){
             e.printStackTrace();
     }

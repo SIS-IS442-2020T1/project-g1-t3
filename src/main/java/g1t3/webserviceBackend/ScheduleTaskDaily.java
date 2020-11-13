@@ -33,10 +33,11 @@ public class ScheduleTaskDaily {
 
     @Autowired
     private WebserviceService service;
+    @Autowired
     private WebserviceRepository repository;
 
     @Autowired
-    private EmailSubscribers EmailSubscribers;
+    private DetectTimeChangeAndEmail DetectTimeChangeAndEmail;
 
     public Integer getDailyFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
@@ -76,7 +77,7 @@ public class ScheduleTaskDaily {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
                 vesselList.add(vessel);
-                EmailSubscribers.toEmailIfBerthOrDepartTimeChange(vessel);
+                DetectTimeChangeAndEmail.toEmailIfBerthOrDepartTimeChange(vessel);
             }
 //            System.out.println(vesselList.toString());
             replaceDataForDaily(vesselList);

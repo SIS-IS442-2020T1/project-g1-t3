@@ -51,6 +51,11 @@ public class Vessel{
     @Length(max = 6)
     private String abbrTerminalM;
 
+    private int changeCount;
+
+    @Length(max = 20)
+    private String firstBthgDt;
+
     public String getAbbrVslM(){
         return abbrVslM;
     }
@@ -101,6 +106,14 @@ public class Vessel{
 
     public String getAbbrTerminalM(){
         return abbrTerminalM;
+    }
+
+    public int getChangeCount() { return changeCount; }
+
+    public String getFirstBthgDt() { return firstBthgDt; }
+
+    public void changeCountPlusOne() {
+        this.changeCount++;
     }
 }
 //    "imoN": 9400215,
