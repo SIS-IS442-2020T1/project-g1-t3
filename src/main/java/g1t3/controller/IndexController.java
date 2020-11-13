@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-//    @GetMapping("/")
-//    public String index() {
-//        return "index";
-//    }
-//    @GetMapping("/favourite")
-//    public String index() {
-//        return "favourite";
-//    }
+    @GetMapping("/webservice")
+    public String webservice() {
+        return "webservice";
+    }
 
-    @GetMapping("/")
-    public String index() {
+    @GetMapping("/login")
+    public String login() {
+        return "index";
+    }
+
+    @GetMapping("/favourite")
+    public String favourite() {
         return "favourite";
     }
 
