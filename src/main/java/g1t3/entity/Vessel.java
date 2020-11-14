@@ -50,11 +50,10 @@ public class Vessel{
     private String status;
     @Length(max = 6)
     private String abbrTerminalM;
-
     private int changeCount;
-
     @Length(max = 20)
     private String firstBthgDt;
+    private String displayColor;
 
     public String getAbbrVslM(){
         return abbrVslM;
@@ -112,8 +111,24 @@ public class Vessel{
 
     public String getFirstBthgDt() { return firstBthgDt; }
 
+    public String getDisplayColor() {
+        return displayColor;
+    }
+
     public void changeCountPlusOne() {
         this.changeCount++;
+    }
+
+    public void setChangeCount(int changeCount) {
+        this.changeCount = changeCount;
+    }
+
+    public void setFirstBthgDt(String firstBthgDt) {
+        this.firstBthgDt = firstBthgDt;
+    }
+
+    public void setDisplayColor(String displayColor) {
+        this.displayColor = displayColor;
     }
 }
 //    "imoN": 9400215,

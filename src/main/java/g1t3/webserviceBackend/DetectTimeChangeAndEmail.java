@@ -10,25 +10,27 @@ import java.util.*;
 @Component
 public class DetectTimeChangeAndEmail {
     @Autowired
-    private VesselService serviceVessel;
+    private VesselService vesselService;
 
     @Autowired
-    private SubscriptionService serviceSubscript;
+    private SubscriptionService subscriptionService;
 
     public Vessel getExistingVessel(Vessel newVessel) {
-        return serviceVessel.findByAbbrVslMAndInVoyN(newVessel.getAbbrVslM(), newVessel.getInVoyN());
+        return vesselService.findByAbbrVslMAndInVoyN(newVessel.getAbbrVslM(), newVessel.getInVoyN());
     }
 
-    public boolean hasDepartTimeChanged(String oldUnbthgDt, String newUnbthgDt) {
-        return !oldUnbthgDt.equals(newUnbthgDt);
+    public boolean hasTimeChanged(String oldTime, String newTime) {
+        return !oldTime.equals(newTime);
     }
 
-    public boolean hasBerthTimeChanged(String oldBthgDt, String newBthgDt) {
-        return !oldBthgDt.equals(newBthgDt);
+    public boolean hasBerthOrDepartTimeChanged(String oldBthgDt, String newBthgDt, String oldUnbthgDt, String newUnbthgDt) {
+        return hasTimeChanged(oldBthgDt,newBthgDt) || hasTimeChanged(oldUnbthgDt, newUnbthgDt);
     }
+
+
 
     public List<Subscription> getSubscriptionListForVessel (Vessel newVessel){
-        return serviceSubscript.findByVessel(newVessel.getAbbrVslM(), newVessel.getInVoyN());
+        return subscriptionService.findByVessel(newVessel.getAbbrVslM(), newVessel.getInVoyN());
     }
 
     public void emailAllSubscribers (List<Subscription> subList, String oldBthgDt, String newBthgDt, String
@@ -38,27 +40,32 @@ public class DetectTimeChangeAndEmail {
         }
     }
 
-    public void toEmailIfBerthOrDepartTimeChange(Vessel newVessel){
-        Vessel existingVessel = getExistingVessel(newVessel);
+    public void toEmailIfBerthOrDepartTimeChange(Vessel newVessel, Vessel existingVessel){
+//        Vessel existingVessel = getExistingVessel(newVessel);
 
-        if (existingVessel != null) {
-            //System.out.println("not null");
-            String oldBthgDt = existingVessel.getBthgDt();
-            String oldUnbthgDt = existingVessel.getUnbthgDt();
-            String newBthgDt = newVessel.getBthgDt();
-            String newUnbthgDt = newVessel.getUnbthgDt();
+//        if (existingVessel != null) {
+        System.out.println("retrieved existing vessel");
+        String oldBthgDt = existingVessel.getBthgDt();
+        String oldUnbthgDt = existingVessel.getUnbthgDt();
+        String newBthgDt = newVessel.getBthgDt();
+        String newUnbthgDt = newVessel.getUnbthgDt();
 
-            if(hasBerthTimeChanged(oldBthgDt, newBthgDt)){
-                System.out.println("BerthOrDepartTimeChanged");
-                newVessel.changeCountPlusOne();
-                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
-            }else if(hasDepartTimeChanged(oldUnbthgDt, newUnbthgDt)) {
-                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
-            }
+        if(hasBerthOrDepartTimeChanged(oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt)){
+            emailAllSubscribers(getSubscriptionListForVessel(newVessel),oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt);
         }
 
+//            if(hasBerthTimeChanged(oldBthgDt, newBthgDt)){
+//                System.out.println("BerthOrDepartTimeChanged");
+//                newVessel.changeCountPlusOne();
+//                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
+//            }else if(hasDepartTimeChanged(oldUnbthgDt, newUnbthgDt)) {
+//                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
+//            }
+//        }
+//        else{ // if it is a new vessel, set the first berthing time
+//            System.out.println("new vessel to be inserted");
+//            newVessel.setFirstBthgDt(newVessel.getBthgDt());
+//        }
     }
-
-
 
 }
