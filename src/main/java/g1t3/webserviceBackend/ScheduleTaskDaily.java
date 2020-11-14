@@ -11,6 +11,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.io.*;
 import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+
 
 import com.google.gson.Gson;
 import org.json.JSONArray;
@@ -21,9 +23,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
+
+import javax.annotation.PostConstruct;
 
 @Component
-public class ScheduleTaskDaily {
+public class ScheduleTaskDaily implements Runnable{
+
+    @SuppressWarnings("rawtypes")
+    ScheduledFuture scheduledFuture;
+    TaskScheduler taskScheduler ;
+
     private static final Logger log = LoggerFactory.getLogger(ScheduleTaskDaily.class);
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -39,7 +51,7 @@ public class ScheduleTaskDaily {
     @Autowired
     private DetectTimeChangeAndEmail DetectTimeChangeAndEmail;
 
-    public Integer getDailyFixedRate(int id){
+    public String getDailyFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
         return webserviceInstructionsById.getDailyUpdate();
     }
@@ -53,8 +65,19 @@ public class ScheduleTaskDaily {
         serviceVessel.saveVessels(vesselList);
     }
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 1000)
-    public void dataForDailyUpdates() throws InterruptedException {
+    public void reSchedule(String cronExpressionStr){
+        if(taskScheduler== null){
+            this.taskScheduler = new ConcurrentTaskScheduler();
+        }
+        if (this.scheduledFuture != null) {
+            this.scheduledFuture.cancel(true);
+        }
+        this.scheduledFuture = this.taskScheduler.schedule(this, new CronTrigger(cronExpressionStr));
+    }
+
+    @Override
+    public  void run(){
+// task to be performed
         log.info("The time is now {}", dateFormat.format(new Date()));
         String encodedString = getApiKey(1);
         byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
@@ -88,6 +111,17 @@ public class ScheduleTaskDaily {
         } catch (Exception e){
             e.printStackTrace();
         }
-        Thread.sleep(getDailyFixedRate(1));
+        finally {
+            initializeScheduler();
+        }
+    }
+
+    @PostConstruct
+    public void initializeScheduler() {
+        //@postcontruct method will be called after creating all beans in application context
+        // read user config map from db
+        // get cron expression create
+        this.reSchedule(getDailyFixedRate(1));
+//        this.reSchedule("* * * ? * *");
     }
 }

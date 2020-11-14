@@ -23,13 +23,11 @@
     <input type="number" id="currentDayMinutes" min="0" max="59" placeholder="0"/>
   </div>
   </div>
-  <h5>Interval for the Daily</h5>
+  <h5>Timing for retrieve of Vessel information daily</h5>
   <div class="row">
     <div class="form-group">
-      <label for="dailyIntervalHolder">Hours</label>
-      <input type="number" id="dailyHours" min="0" max="24" placeholder="0"/>
-      <label for="dailyIntervalHolder">Minutes (less than 60)</label>
-      <input type="number" id="dailyMinutes" min="0" max="59" placeholder="0"/>
+      <label for="dailyIntervalHolder">Timing</label>
+      <input type="time" id="dailyTiming"/>
     </div>
   </div>
   <div class="form-group form-check">
@@ -42,12 +40,11 @@
         var api = document.getElementById('api').value;
         var currentDayHours = document.getElementById('currentDayHours').value;
         var currentDayMinutes = document.getElementById('currentDayMinutes').value;
-        var dailyHours = document.getElementById('dailyHours').value;
-        var dailyMinutes = document.getElementById('dailyMinutes').value;
+        var daily = document.getElementById('dailyTiming').value;
+        console.log(api, currentDayHours, currentDayMinutes, daily);
         var currentday = "";
-        var daily = "";
-        if(dailyHours != "" || dailyMinutes != "" || currentDayHours != "" || currentDayMinutes != "" || api != ""){
-        if(currentDayMinutes < 60 && dailyMinutes < 60){
+        if(daily != "" || currentDayHours != "" || currentDayMinutes != "" || api != ""){
+        if(currentDayMinutes < 60){
             if(currentDayHours != "" || currentDayMinutes != ""){
                 if(currentDayHours == ""){
                     currentDayHours = "0";
@@ -57,20 +54,17 @@
                 }
                 currentday = (parseInt(currentDayHours) * 60 * 60 + parseInt(currentDayMinutes) * 60) * 1000;
             }
-            if(dailyHours != "" || dailyMinutes != ""){
-                if(dailyHours == ""){
-                    dailyHours = "0";
-                }
-                if(dailyMinutes == ""){
-                    dailyMinutes = "0";
-                }
-                daily = ((parseInt(dailyHours) * 60 * 60 + parseInt(dailyMinutes) * 60) * 1000).toString();
+            if(daily != ""){
+                var hours = daily.substring(0, 2);
+                if (hours.substring(0, 1) == "0"){hours = hours.substring(1);}
+                var minutes = daily.substring(3);
+                if (minutes.substring(0, 1) == "0"){minutes = minutes.substring(1);}
+                console.log(hours, minutes);
+                daily = "0 " + minutes + " " + hours + " ? * *";
+                console.log(daily);
             }
-            console.log(api, currentDayHours, currentDayMinutes, currentday, dailyHours, dailyMinutes, daily);
+            console.log(api, currentDayHours, currentDayMinutes, currentday, daily);
 
-            //if(currentDayHours == ""){
-            //    console.log("it is empty");
-            //}
             // Step 1
             var request = new XMLHttpRequest();
 

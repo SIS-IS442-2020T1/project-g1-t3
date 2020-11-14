@@ -17,9 +17,9 @@ import java.util.Base64;
 
 public class WebserviceInstructions {
     @Id
-    private int id;
+    private int id = 1;
     private String apiKey;
-    private int dailyUpdate;
+    private String dailyUpdate = "* * * ? * *";
     private int currentDayUpdate;
 
     public Integer getId(){return id; }
@@ -28,7 +28,7 @@ public class WebserviceInstructions {
         return apiKey;
     }
 
-    public Integer getDailyUpdate(){
+    public String getDailyUpdate(){
         return dailyUpdate;
     }
 
@@ -38,7 +38,7 @@ public class WebserviceInstructions {
 
     public void setApiKey(String apiKey){this.apiKey = apiKey;}
 
-    public void setDailyUpdate(int dailyUpdate){this.dailyUpdate = dailyUpdate;}
+    public void setDailyUpdate(String dailyUpdate){this.dailyUpdate = dailyUpdate;}
 
     public void setCurrentDayUpdate(int currentDayUpdate){this.currentDayUpdate = currentDayUpdate;}
 
