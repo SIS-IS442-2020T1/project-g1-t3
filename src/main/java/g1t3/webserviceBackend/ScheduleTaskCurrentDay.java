@@ -61,10 +61,10 @@ public class ScheduleTaskCurrentDay {
     @Scheduled(initialDelay = 1000, fixedDelay = 1000)
     public void dataForCurrentDay() throws InterruptedException {
         log.info("The time is now {}", dateFormat.format(new Date()));
-//        String encodedString = getApiKey(1);
-//        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-//        String apiKey = new String(decodedBytes);
-        String apiKey = getApiKey(1);
+        String encodedString = getApiKey(1);
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        String apiKey = new String(decodedBytes);
+//        String apiKey = getApiKey(1);
         LocalDate date = LocalDate.now(); //"2020-07-14";
         String command = "curl -X POST \"https://api.pntestbox.com/vsspp/pp/bizfn/berthingSchedule/retrieveByBerthingDate/v1.2\" -H \"accept: application/json\" -H \"Apikey: " + apiKey + "\" -H \"content-type: application/json\" -d \"{ \\\"dateFrom\\\":\\\"" + date.toString() + "\\\", \\\"dateTo\\\":\\\"" + date.toString() + "\\\"}\\\"";
         String readLine = null;
