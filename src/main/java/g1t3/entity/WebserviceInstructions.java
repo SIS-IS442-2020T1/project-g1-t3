@@ -36,6 +36,12 @@ public class WebserviceInstructions {
         return currentDayUpdate;
     }
 
+    public void setApiKey(String apiKey){this.apiKey = apiKey;}
+
+    public void setDailyUpdate(int dailyUpdate){this.dailyUpdate = dailyUpdate;}
+
+    public void setCurrentDayUpdate(int currentDayUpdate){this.currentDayUpdate = currentDayUpdate;}
+
     public WebserviceInstructions hashingApiKey(){
         String apiKeyExtract = this.getApiKey();
         String encodedString = Base64.getEncoder().encodeToString(apiKeyExtract.getBytes());
