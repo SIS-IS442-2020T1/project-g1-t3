@@ -77,7 +77,7 @@ public class ScheduleTaskDaily {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
                 vesselList.add(vessel);
-                DetectTimeChangeAndEmail.toEmailIfBerthOrDepartTimeChange(vessel);
+//                DetectTimeChangeAndEmail.toEmailIfBerthOrDepartTimeChange(vessel);
             }
 //            System.out.println(vesselList.toString());
             replaceDataForDaily(vesselList);
