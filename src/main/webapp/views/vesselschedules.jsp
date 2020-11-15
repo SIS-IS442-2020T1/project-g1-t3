@@ -1,5 +1,7 @@
-<html>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="en">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
     <style>
         table {
             font-family: arial, sans-serif;
@@ -18,8 +20,7 @@
     <head>
     <h1>Vessel Schedule</h1>
     </head>
-
-    <%-- <input id="selectedDate" type="date" min="2020-11-14"  max ="2020-11-16" required> --%>
+    Date:
     <input id="selectedDate" type="date" required>
     
     Sort By:
@@ -34,7 +35,13 @@
         <option value="changeCount">Change Count</option>
         <option value="displayColor">Degree of change</option>
     </select>
-    <%-- <input type="search" name="searchFav"/> --%>
+
+    Order by:
+    <select id="sortingOrder">
+        <option value="A">Ascending</option>
+        <option value="D">Descending</option>
+    </select>
+
     <button id="confirm" onclick="filterAndDisplay()">Confirm</button>
 
     <body>
@@ -57,10 +64,22 @@
                 </thead>
                 <tbody id="thebody">
 
-                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <!-- Latest compiled and minified CSS -->
+                <%-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> --%>
+
+                <!-- Latest compiled and minified JavaScript -->
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+                    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+                    crossorigin="anonymous"></script>
+
                 <script>
-                
                     // $(document).ready(function(){
+                    var email= sessionStorage.getItem("email");
+                    console.log(email);
                     var $mytable = $('#mytable');
                     var firstDate = new Date();
                     min = firstDate.toISOString().substring(0, 10);
@@ -75,34 +94,25 @@
                     input.setAttribute("min",min);
                     input.setAttribute("max",max);
 
-                        // window.location.replace("http://localhost:9100/vesselschedules?date="+min);
+                    // window.location.replace("http://localhost:9100/vesselschedules?date="+min);
                     // filterAndDisplay();
                     filterAndDisplay();
    
                     async function filterAndDisplay(){
                         // e.preventDefault();
-                        
                         try {
-                            
                             var url = `http://localhost:9100/vessels`;
                             const response =await fetch(url, { method: 'GET' } );
                             const allVessels= await response.json();
-                            // var allVessels = await getAllVessels();
-                            // // console.log(allVessels);
-                            
 
                             var selectedDate = $('#selectedDate').val();
-                            if(selectedDate==""){
-                                // var firstDate = new Date();
-                                // selectedDate = firstDate.toISOString().substring(0, 10);
+                            if(selectedDate==""){// if no day is selected, set today as the date
                                 selectedDate = min;
                             }
-                            // console.log("hi"+selectedDate);
-                            // window.location.replace("http://localhost:9100/vesselschedules?date="+date);
-                            // var vessels = "${vessels}";
+             
                             var email = "${email}";
                             console.log(email);
-                            // array or array.length are falsy
+                         
                             if (!allVessels || !allVessels.length) {
                                 alert('Vessel list empty or undefined.');
 
@@ -111,11 +121,9 @@
                                 var rows = "";
                                     for (const vessel of allVessels) {
                                         if(vessel.bthgDt.startsWith(selectedDate)){
-                                            var name = vessel.abbrVslM;
                                             var typeFavorite = "F";
                                             var typeSubscription = "S";
-                                 
-                                            
+                    
                                             eachRow =
                                             // `<td>${vessel.abbrVslM}</td>` +
                                             "<td>" + vessel.abbrVslM + "</td>" +
@@ -126,66 +134,136 @@
                                             "<td>" + vessel.berthN + "</td>" +
                                             "<td>" + vessel.status + "</td>" +
                                             "<td>" + vessel.changeCount + "</td>" +
-                                            '<td style="background-color:'+vessel.displayColor+';">'+ vessel.displayColor + "</td>" +
-                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+ vessel.inVoyN+','+ typeFavorite +')">Add</button></td>' +
-                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+ vessel.inVoyN+','+typeSubscription +')">Subscribe</button></td>';
+                                            '<td style="background-color:'+ vessel.displayColor +';">'+ vessel.displayColor + "</td>" +
+                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+email+','+vessel.abbrVslM +','+ vessel.inVoyN +','+ typeFavorite +')">Add</button></td>' +
+                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+email+','+vessel.abbrVslM+','+vessel.inVoyN+','+ typeSubscription +')">Subscribe</button></td>';
                                             
-                                            rows += "<tr class="+ selectedDate +">" + eachRow + "</tr>";
+                                            rows += "<tr>" + eachRow + "</tr>";
+                                            // rows += "<tr><td> </td><tr>";
+                                            
                                         }
                                 
                                     }
                                 // $("#testTable").find("tbody").empty();
                                 $('#thebody').empty();
                                 $('#thebody').append(rows);
-                             }
-                        // $mytable.dataTable().fnDraw(); // Manually redraw the table after filtering
+                            }
                         }catch (error) {
                            console.log(error);
                         }
                     }
 
-
-
                     function toSort(allVessels){
                         // var $mytable = $('#mytable');
                         var sortBy = $('#sort').val();
-                        console.log("sort by"+sortBy);
+                        var order = $('#sortingOrder').val();
+                        console.log("sort by "+sortBy);
+                        console.log("order "+order);
                         if(sortBy == "abbrVslM" ){
                             allVessels.sort(function(a, b) {
-                                return (a.abbrVslM < b.abbrVslM ? -1 : (a.abbrVslM > b.abbrVslM ? 1 : 0)); 
+                                if(order=="A"){
+                                    return (a.abbrVslM < b.abbrVslM ? -1 : (a.abbrVslM > b.abbrVslM ? 1 : 0)); 
+                                }else if(order=="D"){
+                                    return -(a.abbrVslM < b.abbrVslM ? -1 : (a.abbrVslM > b.abbrVslM ? 1 : 0)); 
+                                }
                             });
-                            // console.log(allVessels);
                         }else if(sortBy == "inVoyN" ){
                             allVessels.sort(function(a, b) {
-                                return (a.inVoyN < b.inVoyN ? -1 : (a.inVoyN > b.inVoyN ? 1 : 0));      
+                                if(order=="A"){
+                                    return (a.inVoyN < b.inVoyN ? -1 : (a.inVoyN > b.inVoyN ? 1 : 0)); 
+                                }else if(order=="D"){
+                                    return -(a.inVoyN < b.inVoyN ? -1 : (a.inVoyN > b.inVoyN ? 1 : 0));
+                                }     
                             });
                         }else if(sortBy == "outVoyN" ){
                             allVessels.sort(function(a, b) {
-                                return (a.outVoyN < b.outVoyN ? -1 : (a.outVoyN > b.outVoyN ? 1 : 0));      
+                                if(order=="A"){
+                                    return (a.outVoyN < b.outVoyN ? -1 : (a.outVoyN > b.outVoyN ? 1 : 0));  
+                                }else if(order=="D"){
+                                    return -(a.outVoyN < b.outVoyN ? -1 : (a.outVoyN > b.outVoyN ? 1 : 0));  
+                                }  
+                                    
                             });
-                        }else if(sortBy == "bthgDt" ){
+                        }else if(sortBy == "btrDt" ){
                             allVessels.sort(function(a, b) {
-                                return (a.bthgDt < b.bthgDt ? -1 : (a.bthgDt > b.bthgDt ? 1 : 0));      
+                                time1 = new Date(a.bthgDt );
+                                time2 = new Date(b.bthgDt);
+                                if(order=="A"){
+                                    return time1-time2;
+                                }else if(order=="D"){
+                                    return time2-time1;
+                                }  
+                                     
                             });
-                        }else if(sortBy == "unbthgDt" ){
+                        }else if(sortBy == "etdDt" ){
                             allVessels.sort(function(a, b) {
-                                return (a.unbthgDt < b.unbthgDt ? -1 : (a.unbthgDt > b.unbthgDt ? 1 : 0));      
+                                time1 = new Date(a.unbthgDt);
+                                time2 = new Date(b.unbthgDt);
+                                if(order=="A"){
+                                    return time1-time2;
+                                }else if(order=="D"){
+                                    return time2-time1;
+                                }         
                             });
-                        }else if(sortBy == "berthN" ){
+                        }else if(sortBy == "berthN" ){ // TODO: wrong order
                             allVessels.sort(function(a, b) {
-                                return (a.berthN < b.berthN ? -1 : (a.berthN > b.berthN ? 1 : 0));      
+                                if(a.berthN==null){
+                                    var number1 = "zzzzz";
+                                }else{
+                                    var number1 = a.berthN;
+                                }
+
+                                if(b.berthN==null){
+                                    var number2 = "zzzzz";
+                                }else{
+                                    var number2 = b.berthN;
+                                }
+                                
+                                if(order=="A"){
+                                    // return (a.berthN < b.berthN ? -1 : (a.berthN > b.berthN ? 1 : 0));
+                                    return number1.localeCompare(number2, undefined, {
+                                            numeric: true,
+                                            sensitivity: 'base'
+                                            });
+                                }else if(order=="D"){
+                                    return number2.localeCompare(number1, undefined, {
+                                            numeric: true,
+                                            sensitivity: 'base'
+                                            });
+                                }       
                             });
                         }else if(sortBy == "status" ){
                             allVessels.sort(function(a, b) {
-                                return (a.status < b.status ? -1 : (a.status > b.status ? 1 : 0));      
+                                if(order=="A"){
+                                    return (a.status < b.status ? -1 : (a.status > b.status ? 1 : 0)); 
+                                }else if(order=="D"){
+                                    return -(a.status < b.status ? -1 : (a.status > b.status ? 1 : 0));
+                                }       
                             });
                         }else if(sortBy == "changeCount" ){
                             allVessels.sort(function(a, b) {
-                                return a.changeCount - b.changeCount;      
+                                if(order=="A"){
+                                    return a.changeCount - b.changeCount; 
+                                }else if(order=="D"){
+                                    return b.changeCount - a.changeCount; 
+                                }       
                             });
                         }else if(sortBy == "displayColor" ){
                             allVessels.sort(function(a, b) {
-                                return (a.displayColor < b.displayColor ? -1 : (a.displayColor > b.displayColor ? 1 : 0));      
+                                var degreeOfChange = {
+                                    null:4,
+                                    "white": 3,
+                                    "yellow": 2,
+                                    "red": 1
+                                };
+                                if(order=="A"){
+                                    return degreeOfChange[b.displayColor]-degreeOfChange[a.displayColor];
+                                }else if(order=="D"){
+                                    return degreeOfChange[a.displayColor]-degreeOfChange[b.displayColor];
+                                }  
+                                // console.log(a.displayColor);
+                                // console.log(degreeOfChange[a.displayColor]);
+                                
                             });
                         }
                         
@@ -248,9 +326,7 @@
                             "abbrVslM": abbrVslM
                         })); 
                         request.onreadystatechange = function() {
-                            // Step 5
                             if( this.readyState == 4 && this.status == 200 ) {
-                                // Response is ready
                                 console.log('success');
                                 alert('adding to favortie'+ request.responseText);
                             }
@@ -263,8 +339,8 @@
             </script>
 
 
-                <tbody>
-            </table>
+            <tbody>
+        </table>
 
             
 

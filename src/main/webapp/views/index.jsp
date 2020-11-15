@@ -47,8 +47,8 @@
         // Step 1
         var request = new XMLHttpRequest();
 
-        var url = `http://localhost:9100/findByEmail/${email}`;
-
+        var url = `http://localhost:9100/findByEmail/`+email;
+        console.log(url);
 
         request.open("GET", url, true);
         request.send();
@@ -94,7 +94,8 @@
             console.log(input_password);
 
             if (actualPassword == input_password) {
-                session.setAttribute("email", email);
+                // session.setAttribute("email", email);
+                sessionStorage.setItem("email", email);
                 window.location.replace('./vesselschedules')
             }else{
                 alert("Wrong password");

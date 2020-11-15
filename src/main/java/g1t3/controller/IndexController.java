@@ -40,8 +40,8 @@ public class IndexController {
 
     @GetMapping("/vesselschedules")
     public String vesselschedules(Model model) {
-        model.addAttribute("email", "df@gmail.com");
-        model.addAttribute("vessels", vesselService.getVessels());
+//        model.addAttribute("email", "df@gmail.com");
+//        model.addAttribute("vessels", vesselService.getVessels());
         return "vesselschedules";
     }
 
