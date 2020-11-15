@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Base64;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Account {
     @Id
     private String email;
     private String password;
+    private String dateOfBirth;
 
     public String getEmail(){
         return email;
@@ -26,6 +28,7 @@ public class Account {
     public String getPassword(){
         return password;
     }
+    public String getDateOfBirth() { return dateOfBirth;}
 
     public void setPassword(String password){
         this.password = password;
