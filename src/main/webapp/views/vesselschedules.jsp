@@ -1,46 +1,41 @@
-<%-- <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> --%>
-
-<script 
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-    
-    <script 
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous">
-</script>
 <html>
-    <div class="container">
-    <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    
-    <h1>Vessel Schedule</h1>
-    
     <style>
-       table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 75%;
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 75%;
         }
+
         td, th {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
         }
     </style>
+
+    <div class="container">
+    <head>
+    <h1>Vessel Schedule</h1>
     </head>
 
-
-   
     <%-- <input id="selectedDate" type="date" min="2020-11-14"  max ="2020-11-16" required> --%>
     <input id="selectedDate" type="date" required>
-    <button id="filter" onclick="filterAndDisplay()">Filter</button>
-
+    
+    Sort By:
+    <select id="sort">
+        <option value="abbrVslM">Vessel's Name</option>
+        <option value="inVoyN">Incoming Voyage Number</option>
+        <option value="outVoyN">Outgoing Voyage Number</option>
+        <option value="btrDt">Berthing Time</option>
+        <option value="etdDt">Departure Time</option>
+        <option value="berthN">Berth Number</option>
+        <option value="status">Status</option>
+        <option value="changeCount">Change Count</option>
+        <option value="displayColor">Degree of change</option>
+    </select>
+    <%-- <input type="search" name="searchFav"/> --%>
+    <button id="confirm" onclick="filterAndDisplay()">Confirm</button>
 
     <body>
         <div class="table">
@@ -60,45 +55,49 @@
                         <th>Subscribe</th>
                     </tr>
                 </thead>
-                <tbody id="tbody">
+                <tbody id="thebody">
 
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                 <script>
                 
-                    $(document).ready(function(){
-                        var $mytable = $('#mytable');
-                        var firstDate = new Date();
-                        min = firstDate.toISOString().substring(0, 10);
-                        console.log(min);
+                    // $(document).ready(function(){
+                    var $mytable = $('#mytable');
+                    var firstDate = new Date();
+                    min = firstDate.toISOString().substring(0, 10);
+                    console.log(min);
 
-                        var lastDate = new Date();
-                        lastDate.setDate(lastDate.getDate() + 7);
-                        var max = lastDate.toISOString().substring(0, 10);
-                        console.log(max);
+                    var lastDate = new Date();
+                    lastDate.setDate(lastDate.getDate() + 6);
+                    var max = lastDate.toISOString().substring(0, 10);
+                    console.log(max);
 
-                        var input = document.getElementById("selectedDate");
-                        // input.setAttribute("value",min);
-                        input.setAttribute("min",min);
-                        input.setAttribute("max",max);
+                    var input = document.getElementById("selectedDate");
+                    input.setAttribute("min",min);
+                    input.setAttribute("max",max);
+
                         // window.location.replace("http://localhost:9100/vesselschedules?date="+min);
-                        // var vessels = getAllVessels();
-                        // filterAndDisplay();
-                        // sort();
-
-                    });
-
-                    // $('#filter').on('click', function(e){
+                    // filterAndDisplay();
+                    filterAndDisplay();
+   
                     async function filterAndDisplay(){
                         // e.preventDefault();
-                        // $('#tbody').remove();
+                        
                         try {
+                            
                             var url = `http://localhost:9100/vessels`;
                             const response =await fetch(url, { method: 'GET' } );
                             const allVessels= await response.json();
                             // var allVessels = await getAllVessels();
-                            console.log(allVessels);
+                            // // console.log(allVessels);
+                            
+
                             var selectedDate = $('#selectedDate').val();
-                            console.log(selectedDate);
+                            if(selectedDate==""){
+                                // var firstDate = new Date();
+                                // selectedDate = firstDate.toISOString().substring(0, 10);
+                                selectedDate = min;
+                            }
+                            // console.log("hi"+selectedDate);
                             // window.location.replace("http://localhost:9100/vesselschedules?date="+date);
                             // var vessels = "${vessels}";
                             var email = "${email}";
@@ -106,13 +105,20 @@
                             // array or array.length are falsy
                             if (!allVessels || !allVessels.length) {
                                 alert('Vessel list empty or undefined.');
-                            } else {
-                                
+
+                            }else{
+                                toSort(allVessels);
                                 var rows = "";
                                     for (const vessel of allVessels) {
                                         if(vessel.bthgDt.startsWith(selectedDate)){
+                                            var name = vessel.abbrVslM;
+                                            var typeFavorite = "F";
+                                            var typeSubscription = "S";
+                                 
+                                            
                                             eachRow =
-                                            "<td>" + vessel.inVoyN + "</td>" +
+                                            // `<td>${vessel.abbrVslM}</td>` +
+                                            "<td>" + vessel.abbrVslM + "</td>" +
                                             "<td>" + vessel.inVoyN + "</td>" +
                                             "<td>" + vessel.outVoyN + "</td>" +
                                             "<td>" + vessel.bthgDt + "</td>" +
@@ -121,20 +127,85 @@
                                             "<td>" + vessel.status + "</td>" +
                                             "<td>" + vessel.changeCount + "</td>" +
                                             '<td style="background-color:'+vessel.displayColor+';">'+ vessel.displayColor + "</td>" +
-                                            '<td><button type= "button" class="btn btn-primary" onclick=AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+vessel.inVoyN+','+ 'F'+')>Add</button></td>' +
-                                            '<td><button type= "button" class="btn btn-primary" onclick=AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+vessel.inVoyN+','+ 'S'+')>Subscribe</button></td>';
+                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+ vessel.inVoyN+','+ typeFavorite +')">Add</button></td>' +
+                                            '<td><button type= "button" class="btn btn-primary" onclick="AddFavoriteOrSubscribe('+ email+ ',' +vessel.abbrVslM+ ','+ vessel.inVoyN+','+typeSubscription +')">Subscribe</button></td>';
                                             
-                                            rows += "<tr>" + eachRow + "</tr>";
+                                            rows += "<tr class="+ selectedDate +">" + eachRow + "</tr>";
                                         }
                                 
                                     }
-                                // $('#tbody').remove();
-                                $('#tbody').append(rows);
+                                // $("#testTable").find("tbody").empty();
+                                $('#thebody').empty();
+                                $('#thebody').append(rows);
                              }
                         // $mytable.dataTable().fnDraw(); // Manually redraw the table after filtering
                         }catch (error) {
                            console.log(error);
                         }
+                    }
+
+
+
+                    function toSort(allVessels){
+                        // var $mytable = $('#mytable');
+                        var sortBy = $('#sort').val();
+                        console.log("sort by"+sortBy);
+                        if(sortBy == "abbrVslM" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.abbrVslM < b.abbrVslM ? -1 : (a.abbrVslM > b.abbrVslM ? 1 : 0)); 
+                            });
+                            // console.log(allVessels);
+                        }else if(sortBy == "inVoyN" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.inVoyN < b.inVoyN ? -1 : (a.inVoyN > b.inVoyN ? 1 : 0));      
+                            });
+                        }else if(sortBy == "outVoyN" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.outVoyN < b.outVoyN ? -1 : (a.outVoyN > b.outVoyN ? 1 : 0));      
+                            });
+                        }else if(sortBy == "bthgDt" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.bthgDt < b.bthgDt ? -1 : (a.bthgDt > b.bthgDt ? 1 : 0));      
+                            });
+                        }else if(sortBy == "unbthgDt" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.unbthgDt < b.unbthgDt ? -1 : (a.unbthgDt > b.unbthgDt ? 1 : 0));      
+                            });
+                        }else if(sortBy == "berthN" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.berthN < b.berthN ? -1 : (a.berthN > b.berthN ? 1 : 0));      
+                            });
+                        }else if(sortBy == "status" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.status < b.status ? -1 : (a.status > b.status ? 1 : 0));      
+                            });
+                        }else if(sortBy == "changeCount" ){
+                            allVessels.sort(function(a, b) {
+                                return a.changeCount - b.changeCount;      
+                            });
+                        }else if(sortBy == "displayColor" ){
+                            allVessels.sort(function(a, b) {
+                                return (a.displayColor < b.displayColor ? -1 : (a.displayColor > b.displayColor ? 1 : 0));      
+                            });
+                        }
+                        
+                    }
+
+                    async function getVessels(){
+                        try {
+                            // var $rows = $('#'+selectedDate);
+                            var url = `http://localhost:9100/vessels`;
+                            const response =await fetch(url, { method: 'GET' } );
+                            const allVessels= await response.json();
+                            filterAndDisplay(allVessels);
+                            // return allVessels;
+                            
+                        }catch (error) {
+                            return "";
+                            // console.log(error);
+                        }
+
+                        
                     }
 
                 //    function getAllVessels() {                       
@@ -159,8 +230,8 @@
 
                
 
-                    function AddFavoriteOrSubscribe(email, abbrVslM, inVoyN, type) {
-                        
+                    function AddFavoriteOrSubscribe(email, abbrVslM, inVoyN, type ) {
+                        alert("adding");
                         var request = new XMLHttpRequest();
                         var url =``;
                         if(type == "F" ){
