@@ -16,8 +16,16 @@ public class AccountService {
     }
 
     public String saveAccount(Account account){
+        if(getAccountByEmail(account.getEmail())!= null){
+            return "Account email already exist!";
+        }
         repository.save(account);
-        return ("Account created");
+        return "Account created";
+    }
+
+    public String saveAccountForReplace(Account account){
+        repository.save(account);
+        return "Account created";
     }
 
     public String replaceAccountPassword(Account account){
@@ -28,7 +36,7 @@ public class AccountService {
             return "email does not exist!";
         }
         accountRetrieved.setPassword(password);
-        saveAccount(accountRetrieved);
+        saveAccountForReplace(accountRetrieved);
         return "Password have been replaced";
     }
 

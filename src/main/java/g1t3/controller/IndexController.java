@@ -55,7 +55,15 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
 
+    @GetMapping("/forgetPassword")
+    public String forgetPassword() {
+        return "forgetPassword";
+    }
 
 
 }

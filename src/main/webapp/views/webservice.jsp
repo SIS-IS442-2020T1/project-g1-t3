@@ -60,7 +60,7 @@
                 var minutes = daily.substring(3);
                 if (minutes.substring(0, 1) == "0"){minutes = minutes.substring(1);}
                 console.log(hours, minutes);
-                daily = "0 " + minutes + " " + hours + " ? * *";
+                daily = "0 " + minutes + " " + hours + " * * *";
                 console.log(daily);
             }
             console.log(api, currentDayHours, currentDayMinutes, currentday, daily);

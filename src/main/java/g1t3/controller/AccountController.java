@@ -22,7 +22,7 @@ public class AccountController {
     }
 
     @PostMapping("/updateAccountPassword/")
-    public String updateAccountByPasswordController(@RequestBody Account account){
+    public String updateAccountByPasswordController(@RequestBody Account account) {
         return service.replaceAccountPassword(account);
     }
 }
