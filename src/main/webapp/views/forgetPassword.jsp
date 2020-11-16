@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
 </head>
-<body>
+<body onload="retrieve()">
 
 <div class="container">
     <h1>Forget Password</h1>
@@ -12,8 +12,6 @@
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
     <select id = "emailaddress" name = "email address">
-        <option value = "@smu.sg">@smu.sg</option>
-        <option value = "@psa.com">@psa.com</option>
     </select>
   </div>
   <div class="form-group">
@@ -127,6 +125,44 @@
         }
 
     }
+
+    function retrieve() {
+        var request = new XMLHttpRequest();
+        var url = `http://localhost:9100/allEmailSuffix/`;
+
+
+        request.open("GET", url, true);
+        request.send();
+
+        request.onreadystatechange = function () {
+            // Step 5
+            if (this.readyState == 4 && this.status == 200) {
+                // Response is ready
+                console.log('success');
+                console.log(request.responseText);
+                //try {
+                    var json_obj = JSON.parse(request.responseText);
+                    console.log(json_obj);
+                    var opt = document.getElementById('emailaddress');
+                    for (var i = 0; i < json_obj.length; i++) {
+                        var eachRow = '<option value = "'+json_obj[i].emailSuffix+'">'+json_obj[i].emailSuffix+'</option>';
+                        opt.innerHTML += eachRow;
+                    }
+
+                //}
+                //catch (err) {
+                //    alert("Cannot parse json");
+                //}
+
+            }
+            else if (request.readyState == 4 && request.status == 404) {
+                console.log('Fail to retrieve request');
+            }
+        }
+
+    }
+
+
 </script>
 </body>
 </html>

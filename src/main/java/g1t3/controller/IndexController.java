@@ -71,5 +71,8 @@ public class IndexController {
         return "forgetPassword";
     }
 
-
+    @GetMapping("/emailSettings")
+    public String emailSettings() {
+        return "emailSettings";
+    }
 }

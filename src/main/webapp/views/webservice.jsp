@@ -8,6 +8,25 @@
 <body>
 
 <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">PSA Admin Page</span>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" >Webservice Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="emailAddressSettings()" >Email address Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logout()" >Logout</a>
+                </li>
+                </ul>
+            </div>
+        </nav>
+</div>
+
+<div class="container">
     <h1>Webservices Settings</h1>
 <div class="form-group">
 <h5>Only fill up what needs to be changed</h5>
@@ -101,6 +120,14 @@
         }else{
             alert("There is no input.");
         }
+    }
+
+    function emailAddressSettings(){
+        window.location.replace("./emailSettings");
+    }
+
+    function logout(){
+        window.location.replace("./logout");
     }
 </script>
 </body>
