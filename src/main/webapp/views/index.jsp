@@ -95,8 +95,12 @@
 
             if (actualPassword == input_password) {
                 // session.setAttribute("email", email);
-                sessionStorage.setItem("email", email);
-                window.location.replace('./vesselschedules')
+                if(email == "admin@admin.com"){
+                    window.location.replace('./webservice')
+                }else{
+                    sessionStorage.setItem("email", email);
+                    window.location.replace('./vesselschedules')
+                }
             }else{
                 alert("Wrong password");
             }
