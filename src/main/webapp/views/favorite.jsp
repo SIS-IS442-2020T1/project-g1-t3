@@ -1,21 +1,45 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
+
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">PSA Vessel Tracking Portal</span>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="goMainPage()">Main</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" >Favorite</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logout()" >Logout</a>
+                </li>
+                </ul>
+                <br>
+            </div>
+        </nav>
     <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    
-    <h1>My Favorites</h1>
-    
-    <style>
-        table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        }
-    </style>
+        <%-- <div class="row"> 
+
+            <div class="col-md-9"> 
+                <h1 class="display-4">My Favorite</h1>
+            </div>
+            <div class="col-md-2">
+                <button style="float: right;" id="goMainPage" class="btn btn-primary" onclick="goMainPage()">Main Page</button>
+            </div>
+            <div class="col-md-1">
+                <button id="logout" class="btn btn-secondary" onclick="logout()" style="float: right;">Logout</button>
+            </div>
+        </div>
+         --%>
     </head>
 
     <body>
+        <br>
         <div class="table">
             <table id="mytable">
                 <thead>
@@ -28,22 +52,103 @@
                         <th>Berth Number</th>
                         <th>Status</th>
                         <th>Change Count</th>
-                        <th>Degree of change</th>
-                        <th>To delete from My Favorties</th>
+                        <th>Degree of Change</th>
+                        <th>Remove from My Favorties</th>
                     </tr>
                 </thead>
+                <tbody id= "thebody">
 
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                 <script>
-                    $(document).ready(function(){
-                        $("button").click(function(){
-                            // e.preventDefault();
-                            $("#mytable").remove();
-                            document.location.reload();
-                        });
-                    });
+                    var email= sessionStorage.getItem("email");
+                    console.log("session "+email);
+                    if(email == null){
+                        logout();
+                    }
+
+                    findFavoritesByUser(email);
+                    
+                    function goMainPage(){
+                        window.location.replace("http://localhost:9100/vesselschedules");
+                    }
+
+                    function logout(){
+                        sessionStorage.clear();
+                        window.location.replace("http://localhost:9100/login");
+                    }
+
+                    function findFavoritesByUser(email){
+                        var request = new XMLHttpRequest();
+                        var url = `http://localhost:9100/FavoriteByUser/`+ email;
+                        console.log(url);//
+                        request.open("GET", url, true);
+                        request.send();
+                        request.onreadystatechange = function() {
+                            if( this.readyState == 4 && this.status == 200 ) {
+                                // Response is ready
+                                console.log('success');
+                                try{
+                                    var json_obj = JSON.parse(request.responseText);
+                                    console.log(json_obj);
+                                     for (const f of json_obj){
+                                        console.log(f.abbrVslM);
+                                        findVesselByIds(f.abbrVslM, f.inVoyN);
+                                     }
+                                }catch (err) {
+                                    alert("Invalid email");
+                                }
+                            }else if( request.readyState == 4 && request.status == 404 ) {
+                                console.log('Fail to retrieve request');
+                            }
+                        }                        
+                    }
+
+                    function findVesselByIds(abbrVslM, inVoyN){
+                        var request = new XMLHttpRequest();
+                        var url = `http://localhost:9100/findVesselById/`+abbrVslM +`/`+inVoyN;
+                        console.log(url);//
+                        request.open("GET", url, true);
+                        request.send();
+                        request.onreadystatechange = function() {
+                            if( this.readyState == 4 && this.status == 200 ) {
+                                // Response is ready
+                                console.log('success');
+                                try{
+                                    var vessel = JSON.parse(request.responseText);
+                                    console.log(vessel);
+                                    var rowId = vessel.abbrVslM + vessel.inVoyN;
+                                    rowId= rowId .replace(/ /g,'');
+                                    console.log(rowId);
+                                    row =`<tr id =\${rowId} >
+                                            <td>\${vessel.abbrVslM}</td>
+                                            <td>\${vessel.inVoyN}</td>
+                                            <td>\${vessel.outVoyN}</td>
+                                            <td>\${vessel.bthgDt}</td>
+                                            <td>\${vessel.unbthgDt}</td>
+                                            <td>\${vessel.berthN}</td>
+                                            <td>\${vessel.status}</td>
+                                            <td style="text-align: center;">\${vessel.changeCount}</td>
+                                            <td style="background-color: \${vessel.displayColor};">\${vessel.displayColor}</td>
+                                            <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}" )'>Remove</button></td>
+                                        </tr>`;
+                                                 
+                                    // rows += "<tr>" + eachRow + "</tr>";
+                                    $('#thebody').append(row);
+                                        
+                                }catch (err) {
+                                    alert("Invalid email");
+                                }
+                            }else if( request.readyState == 4 && request.status == 404 ) {
+                                console.log('Fail to retrieve request');
+                            }
+                        }    
+
+
+                    }
+
+
                     function deleteFavorite(email, abbrVslM, inVoyN) {
-                        
+                        alert("Delete "+abbrVslM +" "+inVoyN +" from My favorites?")
                         var request = new XMLHttpRequest();
 
                         var url = `http://localhost:9100/deleteFavorite`;
@@ -54,50 +159,20 @@
                             "email": email,
                             "inVoyN": inVoyN,
                             "abbrVslM": abbrVslM
-                        })); // query parameters
-                        // $("#table").remove();
-                        // document.location.reload();
-                        // var id1 = '#'+abbrVslM; 
-                        // $(id1).remove();
-                        // document.location.reload();
+                        }));
 
+                        var toDeleteRowId = "#" +abbrVslM + inVoyN;
+                        toDeleteRowId =toDeleteRowId .replace(/ /g,'');
+                        $(toDeleteRowId).remove()
+
+                        // $('#thebody').empty();
+                        // findFavoritesByUser(email);
+                    
                     }
                    
                 </script>
 
-                <c:forEach items="${vessels}" var="vessel">
-                    <tbody>
-                        <%-- <% 
-                            import java.util.*;
-                            import g1t3.entity.*; 
-                            List<Vessel> vesselList = request.getParameterValues("vessels");
-                            for<Vessel v : vesselList>{
-                                if(v.get)
-                            }
-                        %> --%>
-                    <tr id ="${vessel.abbrVslM}" >
-                        <td>${vessel.abbrVslM}</td>
-                        <td>${vessel.inVoyN}</td>
-                        <td>${vessel.outVoyN}</td>
-                        <td>${vessel.bthgDt}</td>
-                        <td>${vessel.unbthgDt}</td>
-                        <td>${vessel.berthN}</td>
-                        <td>${vessel.status}</td>
-                        <td>${vessel.changeCount}</td>
-                        <td style="background-color: ${vessel.displayColor};">${vessel.displayColor}</td>
-                        <%-- <td><input type="button" name="deleteFavBtn" value="Delete" action= "/deleteFavorite"/></td> --%>
-                        <td><button type= "button" class="btn btn-primary" onclick='deleteFavorite("${email}","${vessel.abbrVslM}","${vessel.inVoyN}" )'>Delete</button></td>
-                        <%-- <form action="/editFavourite">
-                            <td><input type="button" name="editFavBtn" value="Edit"/></td>
-                        </form>
-                        <form action="/deleteFavorite">
-                            <td><input type="button" name="deleteFavBtn" value="Delete"/></td>
-                        </form> --%>
-
-
-                    </tr>
-                    </tbody>
-                </c:forEach>
+            
 
                 
                 <%-- <form method="post" action="sortFavourite">
@@ -116,7 +191,7 @@
                     <input type="search" name="searchFav"/>
                 </form> --%>
 
-              
+              </tbody>
             </table>
 
             <br/>

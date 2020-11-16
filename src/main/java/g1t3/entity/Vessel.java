@@ -30,6 +30,7 @@ public class Vessel{
     private String inVoyN;
     private int imoN;
 //    @Column(columnDefinition="text")
+
     @Length(max = 255)
     private String fullVslM;
     @Length(max = 12)

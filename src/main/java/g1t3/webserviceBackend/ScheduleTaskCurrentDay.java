@@ -80,6 +80,7 @@ public class ScheduleTaskCurrentDay {
             for (int i = 0, size = jsonArray.length(); i < size; i++){
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel newVessel = gson.fromJson(objectInArray.toString(), Vessel.class);
+                //
                 Vessel existingVessel = timeDetectionService.getExistingVessel(newVessel);
                 if(existingVessel != null){ //if it is an existing vessel
                     String firstBerthTimeString = existingVessel.getFirstBthgDt();
@@ -110,6 +111,7 @@ public class ScheduleTaskCurrentDay {
                     newVessel.setChangeCount(0);
                     vesselList.add(newVessel);
                 }
+                //
 
             }
             replaceDataForCurrentDay(vesselList);//, date);

@@ -34,6 +34,11 @@ public class VesselController {
         return service.getVesselsByBthgDt(date);
     }
 
+    @GetMapping("/findVesselById/{abbrVslM}/{inVoyN}")
+    public Vessel findByAbbrVslMAndInVoyN(@PathVariable String abbrVslM, @PathVariable String inVoyN){
+        return service.findByAbbrVslMAndInVoyN(abbrVslM, inVoyN);
+    }
+
     @GetMapping("/checkvesseldate/{date}")
     public Boolean checkVesselByDate(@PathVariable String date){
         return service.checkVesselsByBthgDt(date);

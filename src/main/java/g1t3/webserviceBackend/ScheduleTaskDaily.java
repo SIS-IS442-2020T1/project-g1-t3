@@ -12,6 +12,7 @@ import java.util.Date;
 import java.io.*;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 
 import com.google.gson.Gson;
@@ -49,7 +50,7 @@ public class ScheduleTaskDaily implements Runnable{
     private WebserviceRepository repository;
 
     @Autowired
-    private DetectTimeChangeAndEmail DetectTimeChangeAndEmail;
+    private DetectTimeChangeAndEmail timeDetectionService;
 
     public String getDailyFixedRate(int id){
         WebserviceInstructions webserviceInstructionsById = service.getWebserviceById(id);
@@ -98,9 +99,37 @@ public class ScheduleTaskDaily implements Runnable{
             List<Vessel> vesselList = new ArrayList<>();
             for (int i = 0, size = jsonArray.length(); i < size; i++){
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
-                Vessel vessel = gson.fromJson(objectInArray.toString(), Vessel.class);
-                vesselList.add(vessel);
-//                DetectTimeChangeAndEmail.toEmailIfBerthOrDepartTimeChange(vessel);
+                Vessel newVessel= gson.fromJson(objectInArray.toString(), Vessel.class);
+                Vessel existingVessel = timeDetectionService.getExistingVessel(newVessel);
+                if(existingVessel != null){ //if it is an existing vessel
+                    String firstBerthTimeString = existingVessel.getFirstBthgDt();
+                    String oldBerthTimeString = existingVessel.getBthgDt();
+                    String newBerthTimeString = newVessel.getBthgDt();
+                    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//2020-11-16T13:00:00
+                    if(timeDetectionService.hasTimeChanged(oldBerthTimeString,newBerthTimeString)){//if berthing time change
+                        Date firstBerthTime=format.parse(firstBerthTimeString);
+                        Date newBerthTime=format.parse(newBerthTimeString);
+                        existingVessel.changeCountPlusOne(); //
+                        newVessel.setChangeCount(existingVessel.getChangeCount());
+                        timeDetectionService.toEmailIfBerthOrDepartTimeChange(newVessel,existingVessel);
+                        long diff = Math.abs(firstBerthTime.getTime() - newBerthTime.getTime()); //time diff in miliseconds
+                        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff); //time diff in minutes
+                        if(diffInMinutes >= 60){
+                            newVessel.setDisplayColor("red");
+                        }else if(diffInMinutes<60 && diffInMinutes>0 ){
+                            newVessel.setDisplayColor("yellow");
+                        }else if(diffInMinutes==0){ // when new berthing time change back to the first pulled berthing time
+                            newVessel.setDisplayColor("white");
+                        }
+                        newVessel.setFirstBthgDt(existingVessel.getFirstBthgDt());
+                        vesselList.add(newVessel);
+                    }
+                }else{//if it is a new vessel
+                    newVessel.setFirstBthgDt(newVessel.getBthgDt());
+                    newVessel.setDisplayColor("white");
+                    newVessel.setChangeCount(0);
+                    vesselList.add(newVessel);
+                }
             }
 //            System.out.println(vesselList.toString());
             replaceDataForDaily(vesselList);

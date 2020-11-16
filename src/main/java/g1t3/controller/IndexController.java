@@ -18,25 +18,31 @@ public class IndexController {
     private VesselService vesselService;
 
 
-    @GetMapping("/myfavorite/{email}") // TODO: link email from login to favourite
-    public String listFavorite(@PathVariable String email, Model model) {
-        List<Favorite> favoriteList= favoriteService.findByUser(email);
-        List<Vessel> vesselList= new ArrayList<>();
-        System.out.println(favoriteList);
-        if(favoriteList.size() != 0){
-            for(Favorite f: favoriteList){
-                try {
-                    Vessel v = vesselService.findByAbbrVslMAndInVoyN(f.getAbbrVslM(), f.getInVoyN());
-                    vesselList.add(v);
-                }catch(Exception e){
-                    System.out.println("vessel not found");
-                }
-            }
-        }
-        model.addAttribute("vessels", vesselList);
-        return "favorite";
+//    @GetMapping("/myfavorite/{email}") // TODO: link email from login to favourite
+//    public String listFavorite(@PathVariable String email, Model model) {
+//        List<Favorite> favoriteList= favoriteService.findByUser(email);
+//        List<Vessel> vesselList= new ArrayList<>();
+//        System.out.println(favoriteList);
+//        if(favoriteList.size() != 0){
+//            for(Favorite f: favoriteList){
+//                try {
+//                    Vessel v = vesselService.findByAbbrVslMAndInVoyN(f.getAbbrVslM(), f.getInVoyN());
+//                    vesselList.add(v);
+//                }catch(Exception e){
+//                    System.out.println("vessel not found");
+//                }
+//            }
+//        }
+//        model.addAttribute("vessels", vesselList);
+//        return "favorite";
+//
+//    }
 
+    @GetMapping("/myfavorite")
+    public String myfavorite() {
+        return "favorite";
     }
+
 
     @GetMapping("/vesselschedules")
     public String vesselschedules(Model model) {
