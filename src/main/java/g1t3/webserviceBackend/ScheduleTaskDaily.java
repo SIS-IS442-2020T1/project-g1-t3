@@ -46,6 +46,10 @@ public class ScheduleTaskDaily implements Runnable{
 
     @Autowired
     private WebserviceService service;
+
+    @Autowired
+    private EmailServerService emailServerService;
+
     @Autowired
     private WebserviceRepository repository;
 
@@ -97,6 +101,8 @@ public class ScheduleTaskDaily implements Runnable{
             JSONObject json = new JSONObject(response.toString());
             JSONArray jsonArray = json.getJSONArray("results");
             List<Vessel> vesselList = new ArrayList<>();
+            EmailServer es = emailServerService.getEmailServerById(1);
+            System.out.println(es);
             for (int i = 0, size = jsonArray.length(); i < size; i++){
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel newVessel= gson.fromJson(objectInArray.toString(), Vessel.class);
@@ -111,7 +117,7 @@ public class ScheduleTaskDaily implements Runnable{
                         Date newBerthTime=format.parse(newBerthTimeString);
                         existingVessel.changeCountPlusOne(); //
                         newVessel.setChangeCount(existingVessel.getChangeCount());
-                        timeDetectionService.toEmailIfBerthOrDepartTimeChange(newVessel,existingVessel);
+                        timeDetectionService.toEmailWithServerIfBerthOrDepartTimeChange(es,newVessel,existingVessel);
                         long diff = Math.abs(firstBerthTime.getTime() - newBerthTime.getTime()); //time diff in miliseconds
                         long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff); //time diff in minutes
                         if(diffInMinutes >= 60){

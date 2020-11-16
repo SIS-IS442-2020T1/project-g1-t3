@@ -13,6 +13,9 @@ public class DetectTimeChangeAndEmail {
     private VesselService vesselService;
 
     @Autowired
+    private  EmailServerService emailServerService;
+
+    @Autowired
     private SubscriptionService subscriptionService;
 
     public Vessel getExistingVessel(Vessel newVessel) {
@@ -27,7 +30,16 @@ public class DetectTimeChangeAndEmail {
         return hasTimeChanged(oldBthgDt,newBthgDt) || hasTimeChanged(oldUnbthgDt, newUnbthgDt);
     }
 
+    public EmailServer getEmailServerInfo(int key){
+        EmailServer es;
+        try{
+            es = emailServerService.getEmailServerById(key);
+        }catch(Exception e){
+            es = new EmailServer(1, "smtp.psa","psa@email.com" );
+        }
 
+        return es;
+    }
 
     public List<Subscription> getSubscriptionListForVessel (Vessel newVessel){
         return subscriptionService.findByVessel(newVessel.getAbbrVslM(), newVessel.getInVoyN());
@@ -39,11 +51,14 @@ public class DetectTimeChangeAndEmail {
             subscription.sendEmail(oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
         }
     }
+    public void emailAllSubscribersWithServer (String server, String senderEmail,List<Subscription> subList, String oldBthgDt, String newBthgDt, String
+            oldUnbthgDt, String newUnbthgDt){
+        for (Subscription subscription : subList) {
+            subscription.sendEmailWithServer(server, senderEmail,oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
+        }
+    }
 
     public void toEmailIfBerthOrDepartTimeChange(Vessel newVessel, Vessel existingVessel){
-//        Vessel existingVessel = getExistingVessel(newVessel);
-
-//        if (existingVessel != null) {
         System.out.println("retrieved existing vessel");
         String oldBthgDt = existingVessel.getBthgDt();
         String oldUnbthgDt = existingVessel.getUnbthgDt();
@@ -54,18 +69,20 @@ public class DetectTimeChangeAndEmail {
             emailAllSubscribers(getSubscriptionListForVessel(newVessel),oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt);
         }
 
-//            if(hasBerthTimeChanged(oldBthgDt, newBthgDt)){
-//                System.out.println("BerthOrDepartTimeChanged");
-//                newVessel.changeCountPlusOne();
-//                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
-//            }else if(hasDepartTimeChanged(oldUnbthgDt, newUnbthgDt)) {
-//                emailAllSubscribers(getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
-//            }
-//        }
-//        else{ // if it is a new vessel, set the first berthing time
-//            System.out.println("new vessel to be inserted");
-//            newVessel.setFirstBthgDt(newVessel.getBthgDt());
-//        }
+    }
+    public void toEmailWithServerIfBerthOrDepartTimeChange(EmailServer ES, Vessel newVessel, Vessel existingVessel) {
+
+        System.out.println("retrieved existing vessel");
+        String oldBthgDt = existingVessel.getBthgDt();
+        String oldUnbthgDt = existingVessel.getUnbthgDt();
+        String newBthgDt = newVessel.getBthgDt();
+        String newUnbthgDt = newVessel.getUnbthgDt();
+
+        String senderEmail = ES.getSender();
+        String server = ES.getServer();
+        if (hasBerthOrDepartTimeChanged(oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt)) {
+            emailAllSubscribersWithServer(server, senderEmail,getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
+        }
     }
 
 }

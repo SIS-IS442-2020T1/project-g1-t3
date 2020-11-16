@@ -1,8 +1,10 @@
 package g1t3.webserviceBackend;
 
+import g1t3.entity.EmailServer;
 import g1t3.entity.Vessel;
 import g1t3.entity.WebserviceInstructions;
 import g1t3.repository.WebserviceRepository;
+import g1t3.service.EmailServerService;
 import g1t3.service.VesselService;
 import g1t3.service.WebserviceService;
 
@@ -37,6 +39,9 @@ public class ScheduleTaskCurrentDay {
 
     @Autowired
     private WebserviceRepository repository;
+
+    @Autowired
+    private EmailServerService emailServerService;
 
     @Autowired
     private DetectTimeChangeAndEmail timeDetectionService;
@@ -77,6 +82,7 @@ public class ScheduleTaskCurrentDay {
             JSONObject json = new JSONObject(response.toString());
             JSONArray jsonArray = json.getJSONArray("results");
             List<Vessel> vesselList = new ArrayList<>();
+            EmailServer es = emailServerService.getEmailServerById(1);
             for (int i = 0, size = jsonArray.length(); i < size; i++){
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel newVessel = gson.fromJson(objectInArray.toString(), Vessel.class);
@@ -92,7 +98,7 @@ public class ScheduleTaskCurrentDay {
                         Date newBerthTime=format.parse(newBerthTimeString);
                         existingVessel.changeCountPlusOne(); //
                         newVessel.setChangeCount(existingVessel.getChangeCount());
-                        timeDetectionService.toEmailIfBerthOrDepartTimeChange(newVessel,existingVessel);
+                        timeDetectionService.toEmailWithServerIfBerthOrDepartTimeChange(es,newVessel,existingVessel);
                         long diff = Math.abs(firstBerthTime.getTime() - newBerthTime.getTime()); //time diff in miliseconds
                         long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff); //time diff in minutes
                         if(diffInMinutes >= 60){
