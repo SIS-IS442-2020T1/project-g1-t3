@@ -135,7 +135,7 @@
             }
 
             function logout() {
-                window.location.replace("./logout");
+                window.location.replace("./login");
             }
 
             function removeName() {
