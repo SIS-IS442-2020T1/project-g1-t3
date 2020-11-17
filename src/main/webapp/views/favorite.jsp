@@ -23,19 +23,7 @@
             </div>
         </nav>
     <head>
-        <%-- <div class="row"> 
-
-            <div class="col-md-9"> 
-                <h1 class="display-4">My Favorite</h1>
-            </div>
-            <div class="col-md-2">
-                <button style="float: right;" id="goMainPage" class="btn btn-primary" onclick="goMainPage()">Main Page</button>
-            </div>
-            <div class="col-md-1">
-                <button id="logout" class="btn btn-secondary" onclick="logout()" style="float: right;">Logout</button>
-            </div>
-        </div>
-         --%>
+        
     </head>
 
     <body>
@@ -181,22 +169,7 @@
 
             
 
-                
-                <%-- <form method="post" action="sortFavourite">
-                    Sort By:
-                    <select id="categories">
-                        <option value="abbrVslM">Vessel's Name</option>
-                        <option value="inVoyN">Incoming Voyage Number</option>
-                        <option value="outVoyN">Outgoing Voyage Number</option>
-                        <option value="btrDt">Berthing Time</option>
-                        <option value="etdDt">Departure Time</option>
-                        <option value="berthN">Berth Number</option>
-                        <option value="status">Status</option>
-                        <option value="changeCount">Change Count</option>
-                        <option value="degChange">Degree of change</option>
-                    </select>
-                    <input type="search" name="searchFav"/>
-                </form> --%>
+            
 
               </tbody>
             </table>

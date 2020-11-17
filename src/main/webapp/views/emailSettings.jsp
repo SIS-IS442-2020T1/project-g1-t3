@@ -52,6 +52,11 @@
 
 
         <script>
+            var email= sessionStorage.getItem("email");
+            console.log("session "+email);
+            if(email == null){
+                logout();
+            }
 
             function retrieve() {
                 var request = new XMLHttpRequest();
@@ -133,8 +138,10 @@
             function webservice() {
                 window.location.replace("./webservice");
             }
+          
 
             function logout() {
+                sessionStorage.clear();
                 window.location.replace("./login");
             }
 

@@ -18,10 +18,7 @@
                     <a class="nav-link" href="#" onclick="logout()" >Logout</a>
                 </li>
                 </ul>
-                <%-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="VesselName/IncomingVoyage" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form> --%>
+              
             </div>
         </nav>
     <head>
@@ -59,7 +56,7 @@
     </div>
 
     <button id="confirm" class="btn btn-primary" onclick="filterAndDisplay()" style="float: right;">Confirm</button>
-    <%-- <button id="goFavoritePage" class="btn btn-primary" onclick="goFavoritePage()">My Favorite</button> --%>
+   
     <br><br>
 
     <body>
@@ -82,9 +79,7 @@
                 </thead>
                 <tbody id="thebody">
 
-                <!-- Latest compiled and minified CSS -->
-                <%-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> --%>
+              
 
                 <!-- Latest compiled and minified JavaScript -->
                 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -303,27 +298,6 @@
                         }
                         
                     }
-
-
-                //    function getAllVessels() {                       
-                //         var request = new XMLHttpRequest();
-                //         var url = `http://localhost:9100/vessels`;
-                //         request.open("GET", url, true);
-                //         request.send();
-                //         request.onreadystatechange = function() {
-                //             if( this.readyState == 4 && this.status == 200 ) {
-                //                 // Response is ready
-                //                 console.log('success');
-                //                 var json_obj = JSON.parse(request.responseText);
-                //                 // console.log(json_obj);
-                //                 return json_obj;
-                //             }else if( request.readyState == 4 && request.status == 404 ) {
-                //                 console.log('Fail to retrieve request')
-                //                 return "fail";
-                //             }
-                //         }
-                        
-                //    }
 
                
                     function AddFavoriteOrSubscribe(email, abbrVslM, inVoyN, type ) {
