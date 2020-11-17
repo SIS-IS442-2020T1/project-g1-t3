@@ -125,7 +125,7 @@
     <script>
 
         function back() {
-            window.location = './index.jsp';
+            window.location = './login';
             Redirect();
         }
 

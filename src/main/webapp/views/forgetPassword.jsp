@@ -54,7 +54,7 @@
         // Step 1
         var requestGet = new XMLHttpRequest();
 
-        var url = `http://localhost:9100/findByEmail/${email}`;
+        var url = `http://localhost:9100/findByEmail/` + email;
 
         requestGet.open("GET", url, true);
         requestGet.send();
