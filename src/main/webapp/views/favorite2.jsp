@@ -69,7 +69,7 @@
                     findFavoritesByUser(email);
                     
                     function goMainPage(){
-                        window.location.replace("http://localhost:9100/vesselschedules");
+                        window.location.replace("http://localhost:9100/vesselschedules2");
                     }
 
                     function logout(){
@@ -126,17 +126,17 @@
                                             "red": "High"
                                         };
                                     var degreeChange = degreesChangeDict[vessel.displayColor];
-                                    row =`<tr id =\${rowId} >
-                                            <td>\${vessel.abbrVslM}</td>
-                                            <td>\${vessel.inVoyN}</td>
-                                            <td>\${vessel.outVoyN}</td>
-                                            <td>\${vessel.bthgDt}</td>
-                                            <td>\${vessel.unbthgDt}</td>
-                                            <td>\${vessel.berthN}</td>
-                                            <td>\${vessel.status}</td>
-                                            <td style="text-align: center;">\${vessel.changeCount}</td>
-                                            <td style="background-color: \${vessel.displayColor};">\${degreeChange}</td>
-                                            <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}" )'>Remove</button></td>
+                                    row =`<tr id =${rowId} >
+                                            <td>${vessel.abbrVslM}</td>
+                                            <td>${vessel.inVoyN}</td>
+                                            <td>${vessel.outVoyN}</td>
+                                            <td>${vessel.bthgDt}</td>
+                                            <td>${vessel.unbthgDt}</td>
+                                            <td>${vessel.berthN}</td>
+                                            <td>${vessel.status}</td>
+                                            <td style="text-align: center;">${vessel.changeCount}</td>
+                                            <td style="background-color: ${vessel.displayColor};">${degreeChange}</td>
+                                            <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("${email}","${vessel.abbrVslM}","${vessel.inVoyN}" )'>Remove</button></td>
                                         </tr>`;
                                                  
                                     // rows += "<tr>" + eachRow + "</tr>";

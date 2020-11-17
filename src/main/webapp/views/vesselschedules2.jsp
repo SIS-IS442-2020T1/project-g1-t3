@@ -118,7 +118,7 @@
                     filterAndDisplay();
 
                     function goFavoritePage(){
-                        window.location.replace("http://localhost:9100/myfavorite");
+                        window.location.replace("http://localhost:9100/myfavorite2");
                     }
 
                     function logout(){
@@ -148,14 +148,15 @@
                                         if(vessel.bthgDt.startsWith(selectedDate)){
                                             var typeFavorite = "F";
                                             var typeSubscription = "S";
-                                            var degreesChangeDict = {
+
+                                             var degreesChangeDict = {
                                     
                                                 "white": "No Change",
                                                 "yellow": "Medium",
                                                 "red": "High"
                                             };
                                             var degreeChange = degreesChangeDict[vessel.displayColor];
-
+                    
                                             var FavoriteButtonId = vessel.abbrVslM+vessel.inVoyN+typeFavorite;
                                             FavoriteButtonId=FavoriteButtonId.replace(/ /g,'');
                                             // console.log(FavoriteButtonId);
@@ -163,17 +164,17 @@
                                             SubscribeButtonId=SubscribeButtonId.replace(/ /g,'');
                                             // console.log(SubscribeButtonId);
                                             eachRow =
-                                            `<td>\${vessel.abbrVslM}</td>
-                                            <td>\${vessel.inVoyN}</td>
-                                            <td>\${vessel.outVoyN}</td>
-                                            <td>\${vessel.bthgDt}</td>
-                                            <td>\${vessel.unbthgDt}</td>
-                                            <td>\${vessel.berthN}</td>
-                                            <td>\${vessel.status}</td>
-                                            <td style="text-align: center;">\${vessel.changeCount}</td>
-                                            <td style="background-color: \${vessel.displayColor};">\${degreeChange}</td>
-                                            <td><button type= "button" id=\${FavoriteButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}","\${typeFavorite}" )'>Add</button></td>
-                                            <td><button type= "button" id=\${SubscribeButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}","\${typeSubscription}" )'>Subscribe</button></td>`;
+                                            `<td>${vessel.abbrVslM}</td>
+                                            <td>${vessel.inVoyN}</td>
+                                            <td>${vessel.outVoyN}</td>
+                                            <td>${vessel.bthgDt}</td>
+                                            <td>${vessel.unbthgDt}</td>
+                                            <td>${vessel.berthN}</td>
+                                            <td>${vessel.status}</td>
+                                            <td style="text-align: center;">${vessel.changeCount}</td>
+                                            <td style="background-color: ${vessel.displayColor};">${degreeChange}</td>
+                                            <td><button type= "button" id=${FavoriteButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("${email}","${vessel.abbrVslM}","${vessel.inVoyN}","${typeFavorite}" )'>Add</button></td>
+                                            <td><button type= "button" id=${SubscribeButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("${email}","${vessel.abbrVslM}","${vessel.inVoyN}","${typeSubscription}" )'>Subscribe</button></td>`;
                                                  
                                             rows += "<tr>" + eachRow + "</tr>";
                                             

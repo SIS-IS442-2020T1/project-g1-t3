@@ -55,6 +55,11 @@
 </div>
 
 <script>
+    var email= sessionStorage.getItem("email");
+    console.log("session "+ email);
+    if(email == null){
+        logout();
+    }
     function getAllVar() {
         var api = document.getElementById('api').value;
         var currentDayHours = document.getElementById('currentDayHours').value;
@@ -127,7 +132,8 @@
     }
 
     function logout(){
-        window.location.replace("./logout");
+        sessionStorage.clear();
+        window.location.replace("http://localhost:9100/login");
     }
 </script>
 </body>

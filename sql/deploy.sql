@@ -69,13 +69,11 @@ CREATE TABLE IF NOT EXISTS `favorite_tbl` (
 
 DROP TABLE IF EXISTS `subscription_tbl`;
 CREATE TABLE IF NOT EXISTS `subscription_tbl` (
-  `id` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `vessel_id` varchar(255) NOT NULL,
   `abbr_vslm` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `in_voyn` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`abbr_vslm`,`email`,`in_voyn`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -125,6 +123,18 @@ CREATE TABLE IF NOT EXISTS `webserviceinstruction_tbl` (
 
 INSERT INTO `webserviceinstruction_tbl` (`id`, `api_key`, `current_day_update`, `daily_update`) VALUES
 (1, 'ZDBjZWI2MWM1ZWRkNDhjZTk2NGQ2NWJmZmFjZjMyNzQ=', 3600000, '0 0 0 * * *');
+
+
+DROP TABLE IF EXISTS `emailserver_tbl`;
+CREATE TABLE IF NOT EXISTS `emailserver_tbl` (
+  `id` int(11) NOT NULL,
+  `server` varchar(255) DEFAULT NULL,
+  `sender_email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `emailserver_tbl` (`id`, `server`, `sender_email`) VALUES
+(1, 'smtp.psa', 'psa@email.com');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
