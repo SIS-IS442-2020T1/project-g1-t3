@@ -52,6 +52,11 @@
 
 
         <script>
+            var email= sessionStorage.getItem("email");
+            console.log("session "+email);
+            if(email == null){
+                logout();
+            }
 
             function retrieve() {
                 var request = new XMLHttpRequest();
@@ -133,9 +138,9 @@
             function webservice() {
                 window.location.replace("./webservice");
             }
-
-            function logout() {
-                window.location.replace("./logout");
+            function logout(){
+                sessionStorage.clear();
+                window.location.replace("http://localhost:9100/login");
             }
 
             function removeName() {
