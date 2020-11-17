@@ -1,12 +1,8 @@
 package g1t3.webserviceBackend;
 
-import g1t3.entity.EmailServer;
-import g1t3.entity.Vessel;
-import g1t3.entity.WebserviceInstructions;
-import g1t3.repository.WebserviceRepository;
-import g1t3.service.EmailServerService;
-import g1t3.service.VesselService;
-import g1t3.service.WebserviceService;
+import g1t3.entity.*;
+import g1t3.repository.*;
+import g1t3.service.*;
 
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -75,6 +71,7 @@ public class ScheduleTaskCurrentDay {
         String readLine = null;
         StringBuffer response = new StringBuffer();
         Gson gson = new Gson();
+//        emailServerService.sendMail("yilinzhou0814@gmail.com", "Test Subject", "Test mail");
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(command).getInputStream()))){
             while((readLine = reader.readLine()) != null){
                 response.append(readLine);
@@ -82,42 +79,13 @@ public class ScheduleTaskCurrentDay {
             JSONObject json = new JSONObject(response.toString());
             JSONArray jsonArray = json.getJSONArray("results");
             List<Vessel> vesselList = new ArrayList<>();
-            EmailServer es = emailServerService.getEmailServerById(1);
+
             for (int i = 0, size = jsonArray.length(); i < size; i++){
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
                 Vessel newVessel = gson.fromJson(objectInArray.toString(), Vessel.class);
-                //
                 Vessel existingVessel = timeDetectionService.getExistingVessel(newVessel);
-                if(existingVessel != null){ //if it is an existing vessel
-                    String firstBerthTimeString = existingVessel.getFirstBthgDt();
-                    String oldBerthTimeString = existingVessel.getBthgDt();
-                    String newBerthTimeString = newVessel.getBthgDt();
-                    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//2020-11-16T13:00:00
-                    if(timeDetectionService.hasTimeChanged(oldBerthTimeString,newBerthTimeString)){//if berthing time change
-                        Date firstBerthTime=format.parse(firstBerthTimeString);
-                        Date newBerthTime=format.parse(newBerthTimeString);
-                        existingVessel.changeCountPlusOne(); //
-                        newVessel.setChangeCount(existingVessel.getChangeCount());
-                        timeDetectionService.toEmailWithServerIfBerthOrDepartTimeChange(es,newVessel,existingVessel);
-                        long diff = Math.abs(firstBerthTime.getTime() - newBerthTime.getTime()); //time diff in miliseconds
-                        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff); //time diff in minutes
-                        if(diffInMinutes >= 60){
-                            newVessel.setDisplayColor("red");
-                        }else if(diffInMinutes<60 && diffInMinutes>0 ){
-                            newVessel.setDisplayColor("yellow");
-                        }else if(diffInMinutes==0){ // when new berthing time change back to the first pulled berthing time
-                            newVessel.setDisplayColor("white");
-                        }
-                        newVessel.setFirstBthgDt(existingVessel.getFirstBthgDt());
-                        vesselList.add(newVessel);
-                    }
-                }else{//if it is a new vessel
-                    newVessel.setFirstBthgDt(newVessel.getBthgDt());
-                    newVessel.setDisplayColor("white");
-                    newVessel.setChangeCount(0);
-                    vesselList.add(newVessel);
-                }
-                //
+                timeDetectionService.operationsUponBerthTimeChange(newVessel,existingVessel, vesselList);
+                timeDetectionService.toEmailIfBerthOrDepartTimeChange(newVessel,existingVessel);
 
             }
             replaceDataForCurrentDay(vesselList);//, date);
