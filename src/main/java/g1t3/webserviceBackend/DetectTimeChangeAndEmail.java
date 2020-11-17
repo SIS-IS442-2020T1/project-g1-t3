@@ -76,14 +76,16 @@ public class DetectTimeChangeAndEmail {
 
     public void toEmailIfBerthOrDepartTimeChange(Vessel newVessel, Vessel existingVessel){
         System.out.println("retrieved existing vessel");
-        String vesselName = newVessel.getAbbrVslM() + " " + newVessel.getInVoyN();
-        String oldBthgDt = existingVessel.getBthgDt();
-        String oldUnbthgDt = existingVessel.getUnbthgDt();
-        String newBthgDt = newVessel.getBthgDt();
-        String newUnbthgDt = newVessel.getUnbthgDt();
+        if (existingVessel != null) {
+            String vesselName = newVessel.getAbbrVslM() + " " + newVessel.getInVoyN();
+            String oldBthgDt = existingVessel.getBthgDt();
+            String oldUnbthgDt = existingVessel.getUnbthgDt();
+            String newBthgDt = newVessel.getBthgDt();
+            String newUnbthgDt = newVessel.getUnbthgDt();
 
-        if(hasBerthOrDepartTimeChanged(oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt)){
-            emailAllSubscribers(vesselName, getSubscriptionListForVessel(newVessel),oldBthgDt,newBthgDt,oldUnbthgDt,newUnbthgDt);
+            if (hasBerthOrDepartTimeChanged(oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt)) {
+                emailAllSubscribers(vesselName, getSubscriptionListForVessel(newVessel), oldBthgDt, newBthgDt, oldUnbthgDt, newUnbthgDt);
+            }
         }
 
     }
