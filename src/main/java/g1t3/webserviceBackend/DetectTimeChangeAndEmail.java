@@ -95,7 +95,7 @@ public class DetectTimeChangeAndEmail {
             String oldBerthTimeString = existingVessel.getBthgDt();
             String newBerthTimeString = newVessel.getBthgDt();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//2020-11-16T13:00:00
-//            toEmailWithServerIfBerthOrDepartTimeChange(es, newVessel, existingVessel);
+
             if (hasTimeChanged(oldBerthTimeString, newBerthTimeString)) {//if berthing time change
                 Date firstBerthTime = format.parse(firstBerthTimeString);
                 Date newBerthTime = format.parse(newBerthTimeString);
@@ -110,14 +110,17 @@ public class DetectTimeChangeAndEmail {
                 } else if (diffInMinutes == 0) { // when new berthing time change back to the first pulled berthing time
                     newVessel.setDisplayColor("white");
                 }
-                newVessel.setFirstBthgDt(existingVessel.getFirstBthgDt());
-                vesselList.add(newVessel);
+
             }
+            newVessel.setFirstBthgDt(existingVessel.getFirstBthgDt());
+            vesselList.add(newVessel);
+
         } else {//if it is a new vessel
             newVessel.setFirstBthgDt(newVessel.getBthgDt());
             newVessel.setDisplayColor("white");
             newVessel.setChangeCount(0);
             vesselList.add(newVessel);
         }
+
     }
 }
