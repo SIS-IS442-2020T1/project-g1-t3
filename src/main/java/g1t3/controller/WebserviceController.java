@@ -2,6 +2,7 @@ package g1t3.controller;
 
 import g1t3.entity.WebserviceInstructions;
 import g1t3.service.WebserviceService;
+import g1t3.webserviceBackend.ScheduleTaskCurrentDay;
 import g1t3.webserviceBackend.ScheduleTaskDaily;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,9 @@ public class WebserviceController {
 
     @Autowired
     private ScheduleTaskDaily scheduleTaskDaily;
+
+    @Autowired
+    private ScheduleTaskCurrentDay scheduleTaskCurrentDay;
 
     @Autowired
     private WebserviceService service;
@@ -38,6 +42,7 @@ public class WebserviceController {
                 webserviceInstructions.setCurrentDayUpdate(currentDay);
             }
             service.replaceWebserviceInstructions(webserviceInstructions);
+            scheduleTaskCurrentDay.initializeScheduler();
             scheduleTaskDaily.initializeScheduler();
             return "Data replaced";
         } else{
