@@ -138,9 +138,11 @@
             function webservice() {
                 window.location.replace("./webservice");
             }
-            function logout(){
+          
+
+            function logout() {
                 sessionStorage.clear();
-                window.location.replace("http://localhost:9100/login");
+                window.location.replace("./login");
             }
 
             function removeName() {
