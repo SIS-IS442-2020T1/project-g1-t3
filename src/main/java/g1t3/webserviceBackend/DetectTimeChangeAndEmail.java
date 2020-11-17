@@ -113,6 +113,9 @@ public class DetectTimeChangeAndEmail {
                     newVessel.setDisplayColor("white");
                 }
 
+            }else{
+                newVessel.setDisplayColor(existingVessel.getDisplayColor());
+                newVessel.setChangeCount(existingVessel.getChangeCount());
             }
             newVessel.setFirstBthgDt(existingVessel.getFirstBthgDt());
             vesselList.add(newVessel);
