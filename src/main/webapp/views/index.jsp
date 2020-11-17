@@ -121,6 +121,7 @@
             if (actualPassword == input_password) {
                 // session.setAttribute("email", email);
                 if(email == "admin@admin.com"){
+                    sessionStorage.setItem("email", email);
                     window.location.replace('./webservice')
                 }else{
                     sessionStorage.setItem("email", email);
