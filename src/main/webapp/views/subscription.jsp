@@ -79,12 +79,13 @@
                                                 <li>
                                                     <a href="#" onclick='goMainPage()'>Main</a>
                                                 </li>
+
+                                                 <li>
+                                                    <a href="#" onclick=goFavoritePage()>Favourites</a>
+                                                </li>
     
                                                 <li>
-                                                    <a href="#">Favourites</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" onclick='goSubscriptionPage()'>Subscription</a>
+                                                    <a href="#">Subscription</a>
                                                 </li>
 
                                                 <li class="wm-megamenu-li" id="logout">
@@ -107,7 +108,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="wm-mini-title">
-                                <h1>My Favourites</h1>
+                                <h1>My Subscription</h1>
                             </div>
                             <!-- <div class="wm-breadcrumb">
                                 <ul>
@@ -136,7 +137,7 @@
                                 <th>Status</th>
                                 <th>Change Count</th>
                                 <th>Degree of Change</th>
-                                <th>Remove from My Favorites</th>
+                                <th>Cancel Subscription</th>
                             </tr>
                         </thead>
                         <tbody id= "thebody">
@@ -222,23 +223,25 @@
                 logout();
             }
 
-            findFavoritesByUser(email);
+            findSubscriptionByUser(email);
             
             function goMainPage(){
                 window.location.replace("./vesselschedules");
             }
-            function goSubscriptionPage(){
-                window.location.replace("./subscription");
+
+            function goFavoritePage(){
+                window.location.replace("./myfavorite");
             }
+
 
             function logout(){
                 sessionStorage.clear();
                 window.location.replace("./login");
             }
 
-            function findFavoritesByUser(email){
+            function findSubscriptionByUser(email){
                 var request = new XMLHttpRequest();
-                var url = `http://localhost:9100/FavoriteByUser/`+ email;
+                var url = `http://localhost:9100/SubscriptionByUser/`+ email;
                 console.log(url);//
                 request.open("GET", url, true);
                 request.send();
@@ -295,7 +298,7 @@
                                     <td>${vessel.status}</td>
                                     <td style="text-align: center;">${vessel.changeCount}</td>
                                     <td style="background-color: ${vessel.displayColor};">${degreeChange}</td>
-                                    <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("${email}","${vessel.abbrVslM}","${vessel.inVoyN}" )'>Remove</button></td>
+                                    <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteSubscription("${email}","${vessel.abbrVslM}","${vessel.inVoyN}" )'>Unsubscribe</button></td>
                                 </tr>`;
                                             
                             // rows += "<tr>" + eachRow + "</tr>";
@@ -313,11 +316,11 @@
             }
 
 
-            function deleteFavorite(email, abbrVslM, inVoyN) {
-                alert("Delete "+abbrVslM +" "+inVoyN +" from My favorites?")
+            function deleteSubscription(email, abbrVslM, inVoyN) {
+                alert("Delete "+abbrVslM +" "+inVoyN +" from My Subscription? You would no long receive email notification")
                 var request = new XMLHttpRequest();
 
-                var url = `http://localhost:9100/deleteFavorite`;
+                var url = `http://localhost:9100/deleteSubscription`;
 
                 request.open("DELETE", url, true);
                 request.setRequestHeader("Content-type", "application/json;charset=UTF-8");
