@@ -42,3 +42,4 @@ out/artifacts/VesselScheduleTrackingApp_war_exploded/.mvn/wrapper/maven-wrapper.
 out/artifacts/VesselScheduleTrackingApp_war_exploded/api.txt
 out/artifacts/VesselScheduleTrackingApp_war_exploded/final-presentation.pptx
 out/artifacts/VesselScheduleTrackingApp_war_exploded/META-INF/MANIFEST.MF
+.DS_Store

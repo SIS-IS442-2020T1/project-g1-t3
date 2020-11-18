@@ -48,13 +48,13 @@
                     <input class="input100" type="text" id='email' name="username" placeholder="Email Address">
                     <span class="focus-input100" data-placeholder="&#xe82a;"></span>
 
-                    
+                    <select id = 'emailaddress' name = "email address" style='margin-left: 90%'>
+                    </select>
+    
                 </div>
                 <!-- Need to add select button -->
                 <br> 
-                <select id = 'emailaddress' name = "email address">
-                </select>
-
+                
                 <div class="wrap-input100 validate-input" data-validate="Enter password">
                     <input class="input100" type="password" id='password' name="pass" placeholder="Password">
                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
@@ -133,7 +133,7 @@
             if(document.getElementById('email').value == "" || document.getElementById('password').value == "" || document.getElementById('confirmPassword').value == "" 
             || document.getElementById('dateOfBirth').value == "" ){
                 var alert = `<div class="alert alert-danger">
-                                <strong>Error!</strong> Please fill in all boxes before submitting.
+                                <strong>Error!</strong> Please fill in all fields before submitting.
                             </div>`;
                 document.getElementById('alertMessage').innerHTML = alert;
             }else{

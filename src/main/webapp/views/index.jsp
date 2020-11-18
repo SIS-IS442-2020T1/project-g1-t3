@@ -28,11 +28,60 @@
         <link rel="stylesheet" type="text/css" href="login/css/main.css">
     <!--===============================================================================================-->
 
-        <title>Registration</title>
+        <title>Login</title>
     </head>
 <body>
 
-<div class="container">
+    <!-- load background image -->
+    <div class="container-login100" style="background-image: url('login/images/port-of-singapore-hd.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+            <span class="login100-form-title p-b-41">
+                
+                <img src="login/images/psa-logo.png" alt="PSA Logo" height="100px" width="200px">
+                <br><br>
+                <span style = "color: #ffffff">PORTNET 2.0</span>
+            </span>
+            <div class="wrap-input100 validate-input" data-validate = "Enter username">
+                <input class="input100" type="text" id='email' name="username" placeholder="Email Address">
+                <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+
+                
+            </div>
+            <!-- Need to add select button -->
+            <br> 
+
+            <div class="wrap-input100 validate-input" data-validate="Enter password">
+                <input class="input100" type="password" id='password' name="pass" placeholder="Password">
+                <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+            </div>
+
+
+            <div class="container-login100-form-btn m-t-32">
+                <button class="login100-form-btn" id="login" onclick='getEmail()' style='background: #008810'>Login</button> 
+            </div>
+            <br>
+
+            <div class="container-login100-form-btn m-t-32">
+                <button class="login100-form-btn" id="register" onclick='register()'>Create Account</button> 
+
+                <button class="login100-form-btn" id="forgetPassword"  onclick="forgetPassword()">
+                    Forget Password
+                </button>
+            </div>
+
+            <div id='alertMessage'>
+                <!-- <div class="alert alert-danger">
+                    <strong>Error!</strong> Passwords entered do not match.
+                </div> -->
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+<!-- <div class="container">
     <h1>Login</h1>  
 <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -50,21 +99,33 @@
 <div>
     <button id="register" class="btn btn-primary" onclick='register()'>Register</button>
     <button id="forgetPassword" class="btn btn-primary" onclick='forgetPassword()'>Forget Password?</button>
+</div> -->
+
+<div id='alertMessage'>
+    <!-- <div class="alert alert-danger">
+        <strong>Error!</strong> Passwords entered do not match.
+    </div> -->
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
 <script>
 
     function forgetPassword(){
-        window.location.replace('./forgetPassword');
+        window.location = './forgetPassword';
+        Redirect();
     }
 
     function register(){
-        window.location.replace('./register');
+        window.location = './register';
+        Redirect();
     }
     function getEmail() {
         if(document.getElementById('email').value == "" || document.getElementById('password').value == ""){
-            alert("Please fill up all the field!");
+            // alert("Please fill up all the field!");
+            var alert = `<div class="alert alert-danger">
+                                <strong>Error!</strong> Please fill in all fields before submitting.
+                            </div>`;
+            document.getElementById('alertMessage').innerHTML = alert;
         } else {
         var email = document.getElementById('email').value;
         console.log(email);
@@ -92,12 +153,16 @@
                     processLogin(json_obj);
                 }
                 catch (err) {
-                    alert("Invalid email");
+                    // alert("Invalid email");
+                    var alert = `<div class="alert alert-danger">
+                                <strong>Error!</strong> Invalid email!
+                            </div>`;
+                    document.getElementById('alertMessage').innerHTML = alert;
                 }
 
             }
             else if( request.readyState == 4 && request.status == 404 ) {
-                 console.log('Fail to retrieve request');
+                console.log('Fail to retrieve request');
             }
         }
         }
@@ -122,13 +187,21 @@
                 // session.setAttribute("email", email);
                 if(email == "admin@admin.com"){
                     sessionStorage.setItem("email", email);
-                    window.location.replace('./webservice')
+                    // window.location.replace('./webservice')
+                    window.location = './webservice';
+                    Redirect();
                 }else{
                     sessionStorage.setItem("email", email);
-                    window.location.replace('./vesselschedules')
+                    // window.location.replace('./vesselschedules')
+                    window.location = './vesselschedules';
+                    Redirect();
                 }
             }else{
-                alert("Wrong password");
+                // alert("Wrong password");
+                var alert = `<div class="alert alert-danger">
+                                <strong>Error!</strong> Wrong password.
+                            </div>`;
+                document.getElementById('alertMessage').innerHTML = alert;
             }
 
         }
