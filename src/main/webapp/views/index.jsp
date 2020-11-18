@@ -150,19 +150,26 @@
                 if( this.readyState == 4 && this.status == 200 ) {
                     // Response is ready
                     // console.log('success');
-                    try{
-                        var json_obj = JSON.parse(request.responseText);
-                        console.log('response from findByEmail:' + json_obj);
+                    // try{
+                    var json_obj = JSON.parse(request.responseText);
+                    console.log('response from findByEmail:' + json_obj);
+                    if (json_obj == null) {
+                        var alert = `<div class="alert alert-danger">
+                                     <strong>Error!</strong> Invalid email!
+                                    </div>`;
+                    document.getElementById('alertMessage').innerHTML = alert;
+                    } else {
                         processLogin(json_obj);
                     }
-                    catch (err) {
-                        console.log('error from findByEmail:' + err);
-                        // alert("Invalid email");
-                        var alert = `<div class="alert alert-danger">
-                                    <strong>Error!</strong> Invalid email!
-                                </div>`;
-                        document.getElementById('alertMessage').innerHTML = alert;
-                    }
+                    // }
+                    // catch (err) {
+                    //     console.log('error from findByEmail:' + err);
+                    //     // alert("Invalid email");
+                    //     var alert = `<div class="alert alert-danger">
+                    //                 <strong>Error!</strong> Invalid email!
+                    //             </div>`;
+                    //     document.getElementById('alertMessage').innerHTML = alert;
+                    // }
 
                 }
                 else if( request.readyState == 4 && request.status == 404 ) {
