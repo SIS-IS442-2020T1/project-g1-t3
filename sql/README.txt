@@ -1,8 +1,9 @@
-Download Microsoft Edge if you are having issue opening the login page (Force to download by the browser)
+Download Microsoft Edge(old version) if you are having issue opening the login page (Force to download by the browser)
 -----How to run the program ------
 1. Run deploy.sql to create the database
 2. Run compile.bat
 3. Run run.bat
+(If any errors occur, use Intellij to run the app instead)
 -------------Login---------------
 4. Access the interface with `localhost:9100/login`
 5. Use Test account to login: Username: test@smu.sg Password: 123
