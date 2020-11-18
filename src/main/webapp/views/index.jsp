@@ -63,7 +63,7 @@
 
             <div class="container-login100-form-btn m-t-32">
                 <button class="login100-form-btn" id="register" onclick='register()'>Create Account</button> 
-
+                <br><br>
                 <button class="login100-form-btn" id="forgetPassword"  onclick="forgetPassword()">
                     Forget Password
                 </button>
