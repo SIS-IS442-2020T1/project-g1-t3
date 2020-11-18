@@ -169,7 +169,7 @@
                                 <th>Status</th>
                                 <th>Change Count</th>
                                 <th>Degree of change</th>
-                                <th>Add to Favorties</th>
+                                <th>Add to Favorites</th>
                                 <th>Subscribe</th>
                             </tr>
                         </thead>
