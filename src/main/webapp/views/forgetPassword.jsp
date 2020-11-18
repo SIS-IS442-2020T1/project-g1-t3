@@ -48,7 +48,7 @@
                 <input class="input100" type="text" id='email' name="username" placeholder="Email Address">
                 <span class="focus-input100" data-placeholder="&#xe82a;"></span>
 
-                <select id = 'emailaddress' name = "email address" style='margin-left: 90%'>
+                <select id = 'emailaddress' name = "email address" style='margin-left: 80%; width: auto'>
                 </select>
 
             </div>
