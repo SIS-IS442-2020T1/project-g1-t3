@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
+        <!-- <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">  -->
+
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="login/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="login/css/util.css">
+        <link rel="stylesheet" type="text/css" href="login/css/main.css">
+    <!--===============================================================================================-->
+
+        <title>Vessel Schedules</title>
+
     </head>
-    
+
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
             <span class="navbar-brand mb-0 h1">PSA Vessel Tracking Portal</span>
@@ -20,7 +50,6 @@
                     <a class="nav-link" href="#" onclick="logout()" >Logout</a>
                 </li>
                 </ul>
-              
             </div>
         </nav>
     
@@ -58,7 +87,6 @@
     </div>
 
     <button id="confirm" class="btn btn-primary" onclick="filterAndDisplay()" style="float: right;">Confirm</button>
-   
     <br><br>
 
     <body>
@@ -81,7 +109,7 @@
                 </thead>
                 <tbody id="thebody">
 
-              
+                <!-- Latest compiled and minified CSS -->
 
                 <!-- Latest compiled and minified JavaScript -->
                 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -115,7 +143,7 @@
                     filterAndDisplay();
 
                     function goFavoritePage(){
-                        window.location.replace("http://localhost:9100/myfavorite");
+                        window.location.replace("http://localhost:9100/myfavorite2");
                     }
 
                     function logout(){
@@ -145,14 +173,15 @@
                                         if(vessel.bthgDt.startsWith(selectedDate)){
                                             var typeFavorite = "F";
                                             var typeSubscription = "S";
-                                            var degreesChangeDict = {
+
+                                             var degreesChangeDict = {
                                     
                                                 "white": "No Change",
                                                 "yellow": "Medium",
                                                 "red": "High"
                                             };
                                             var degreeChange = degreesChangeDict[vessel.displayColor];
-
+                    
                                             var FavoriteButtonId = vessel.abbrVslM+vessel.inVoyN+typeFavorite;
                                             FavoriteButtonId=FavoriteButtonId.replace(/ /g,'');
                                             // console.log(FavoriteButtonId);
@@ -160,17 +189,17 @@
                                             SubscribeButtonId=SubscribeButtonId.replace(/ /g,'');
                                             // console.log(SubscribeButtonId);
                                             eachRow =
-                                            `<td>\${vessel.abbrVslM}</td>
-                                            <td>\${vessel.inVoyN}</td>
-                                            <td>\${vessel.outVoyN}</td>
-                                            <td>\${vessel.bthgDt}</td>
-                                            <td>\${vessel.unbthgDt}</td>
-                                            <td>\${vessel.berthN}</td>
-                                            <td>\${vessel.status}</td>
-                                            <td style="text-align: center;">\${vessel.changeCount}</td>
-                                            <td style="background-color: \${vessel.displayColor};">\${degreeChange}</td>
-                                            <td><button type= "button" id=\${FavoriteButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}","\${typeFavorite}" )'>Add</button></td>
-                                            <td><button type= "button" id=\${SubscribeButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}","\${typeSubscription}" )'>Subscribe</button></td>`;
+                                            `<td>${vessel.abbrVslM}</td>
+                                            <td>${vessel.inVoyN}</td>
+                                            <td>${vessel.outVoyN}</td>
+                                            <td>${vessel.bthgDt}</td>
+                                            <td>${vessel.unbthgDt}</td>
+                                            <td>${vessel.berthN}</td>
+                                            <td>${vessel.status}</td>
+                                            <td style="text-align: center;">${vessel.changeCount}</td>
+                                            <td style="background-color: ${vessel.displayColor};">${degreeChange}</td>
+                                            <td><button type= "button" id=${FavoriteButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("${email}","${vessel.abbrVslM}","${vessel.inVoyN}","${typeFavorite}" )'>Add</button></td>
+                                            <td><button type= "button" id=${SubscribeButtonId} class="btn btn-outline-primary" onclick='AddFavoriteOrSubscribe("${email}","${vessel.abbrVslM}","${vessel.inVoyN}","${typeSubscription}" )'>Subscribe</button></td>`;
                                                  
                                             rows += "<tr>" + eachRow + "</tr>";
                                             
@@ -300,6 +329,27 @@
                         }
                         
                     }
+
+
+                //    function getAllVessels() {                       
+                //         var request = new XMLHttpRequest();
+                //         var url = `http://localhost:9100/vessels`;
+                //         request.open("GET", url, true);
+                //         request.send();
+                //         request.onreadystatechange = function() {
+                //             if( this.readyState == 4 && this.status == 200 ) {
+                //                 // Response is ready
+                //                 console.log('success');
+                //                 var json_obj = JSON.parse(request.responseText);
+                //                 // console.log(json_obj);
+                //                 return json_obj;
+                //             }else if( request.readyState == 4 && request.status == 404 ) {
+                //                 console.log('Fail to retrieve request')
+                //                 return "fail";
+                //             }
+                //         }
+                        
+                //    }
 
                
                     function AddFavoriteOrSubscribe(email, abbrVslM, inVoyN, type ) {

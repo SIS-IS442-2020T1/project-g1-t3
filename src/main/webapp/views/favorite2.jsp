@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
-
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-            <span class="navbar-brand mb-0 h1">PSA Vessel Tracking Portal</span>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="goMainPage()">Main</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" >Favorite</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="logout()" >Logout</a>
-                </li>
-                </ul>
-                <br>
-            </div>
-        </nav>
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
+
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                <span class="navbar-brand mb-0 h1">PSA Vessel Tracking Portal</span>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="goMainPage()">Main</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" >Favorite</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()" >Logout</a>
+                    </li>
+                    </ul>
+                    <br>
+                </div>
+            </nav>
+        </div>
+    
+        
     </head>
 
     <body>
@@ -56,7 +59,7 @@
                     findFavoritesByUser(email);
                     
                     function goMainPage(){
-                        window.location.replace("http://localhost:9100/vesselschedules2");
+                        window.location.replace("http://localhost:9100/vesselschedules");
                     }
 
                     function logout(){
@@ -113,17 +116,17 @@
                                             "red": "High"
                                         };
                                     var degreeChange = degreesChangeDict[vessel.displayColor];
-                                    row =`<tr id =${rowId} >
-                                            <td>${vessel.abbrVslM}</td>
-                                            <td>${vessel.inVoyN}</td>
-                                            <td>${vessel.outVoyN}</td>
-                                            <td>${vessel.bthgDt}</td>
-                                            <td>${vessel.unbthgDt}</td>
-                                            <td>${vessel.berthN}</td>
-                                            <td>${vessel.status}</td>
-                                            <td style="text-align: center;">${vessel.changeCount}</td>
-                                            <td style="background-color: ${vessel.displayColor};">${degreeChange}</td>
-                                            <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("${email}","${vessel.abbrVslM}","${vessel.inVoyN}" )'>Remove</button></td>
+                                    row =`<tr id =\${rowId} >
+                                            <td>\${vessel.abbrVslM}</td>
+                                            <td>\${vessel.inVoyN}</td>
+                                            <td>\${vessel.outVoyN}</td>
+                                            <td>\${vessel.bthgDt}</td>
+                                            <td>\${vessel.unbthgDt}</td>
+                                            <td>\${vessel.berthN}</td>
+                                            <td>\${vessel.status}</td>
+                                            <td style="text-align: center;">\${vessel.changeCount}</td>
+                                            <td style="background-color: \${vessel.displayColor};">\${degreeChange}</td>
+                                            <td style="text-align: center;"><button type= "button" class="btn btn-outline-primary" onclick='deleteFavorite("\${email}","\${vessel.abbrVslM}","\${vessel.inVoyN}" )'>Remove</button></td>
                                         </tr>`;
                                                  
                                     // rows += "<tr>" + eachRow + "</tr>";
@@ -166,6 +169,9 @@
                    
                 </script>
 
+            
+
+            
 
               </tbody>
             </table>
