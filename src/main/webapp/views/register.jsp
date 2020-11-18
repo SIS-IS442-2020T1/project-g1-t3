@@ -42,10 +42,12 @@
                     
                     <img src="login/images/psa-logo.png" alt="PSA Logo" height="100px" width="200px">
 					<br><br>
-					<span style = "color: #ffffff">PORTNET 2.0</span>
+					<span style = "color: #ffffff">PORTNET 2.0</span><br><br>
+
+                    <span>Registration</span>
                 </span>
                 <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                    <input class="input100" type="text" id='email' name="username" placeholder="Email Address">
+                    <input class="input100" type="email" id='email' name="username" placeholder="Email Address">
                     <span class="focus-input100" data-placeholder="&#xe82a;"></span>
 
                     <select id = 'emailaddress' name = "email address" style='margin-left: 90%'>
@@ -53,7 +55,6 @@
     
                 </div>
                 <!-- Need to add select button -->
-                <br> 
                 
                 <div class="wrap-input100 validate-input" data-validate="Enter password">
                     <input class="input100" type="password" id='password' name="pass" placeholder="Password">
@@ -136,7 +137,7 @@
                                 <strong>Error!</strong> Please fill in all fields before submitting.
                             </div>`;
                 document.getElementById('alertMessage').innerHTML = alert;
-            }else{
+            } else {
             var email = document.getElementById('email').value + document.getElementById('emailaddress').value;
             var dob = document.getElementById('dateOfBirth').value;
             if(document.getElementById('password').value == document.getElementById('confirmPassword').value){
