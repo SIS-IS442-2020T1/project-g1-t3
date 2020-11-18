@@ -1,1 +1,1 @@
-java -jar VesselScheduleTrackingApp-0.0.1-SNAPSHOT.war
+java -jar target/VesselScheduleTrackingApp-0.0.1-SNAPSHOT.war
