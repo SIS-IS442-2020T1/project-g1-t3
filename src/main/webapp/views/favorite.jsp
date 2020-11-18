@@ -133,7 +133,7 @@
                                 <th>Status</th>
                                 <th>Change Count</th>
                                 <th>Degree of Change</th>
-                                <th>Remove from My Favorties</th>
+                                <th>Remove from My Favorites</th>
                             </tr>
                         </thead>
                         <tbody id= "thebody">
