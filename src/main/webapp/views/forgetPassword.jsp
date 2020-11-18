@@ -71,7 +71,7 @@
             <div class="container-login100-form-btn m-t-32">
                 <button class="login100-form-btn" id="back" onclick='back()'>Back to Login Page</button> 
                 
-                <button class="login100-form-btn" style='background: #008810' onclick="register()">
+                <button class="login100-form-btn" style='background: #008810' onclick="forget()">
                     Reset
                 </button>
             </div>
