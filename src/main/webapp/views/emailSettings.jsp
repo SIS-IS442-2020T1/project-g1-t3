@@ -103,7 +103,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="wm-mini-title">
-                                <h1>Web Services Settings</h1>
+                                <h1>Email Address Settings</h1>
                             </div>
                             <!-- <div class="wm-breadcrumb">
                                 <ul>
@@ -130,8 +130,8 @@
                                 <ul class="wm-form-listing">
                                     <!-- <label for="apikeyHolder">Api key</label>
                                     <input type="text" class="form-control" id="api"> -->
-                                    <li class="wm-label-sec">API Key</li>
-                                    <li><input type="text" class="form-control" id="api"></li>
+                                    <li class="wm-label-sec">Email</li>
+                                    <li><input type="text" class="form-control" id="email"></li>
                                     <button type="submit" class="btn btn-success" style='float:right' onclick='add()' >ADD</button> 
                                     <button type="submit" class="btn btn-danger" style='float:right; margin: 0px 5px 30px 0px' onclick='removeName()' >DELETE</button>
 
