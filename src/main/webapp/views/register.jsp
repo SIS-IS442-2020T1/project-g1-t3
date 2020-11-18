@@ -51,6 +51,7 @@
                     <span class="focus-input100" data-placeholder="&#xe82a;"></span>
 
                     <select id = 'emailaddress' name = "email address" style='margin-left: 80%; width: auto'>
+                        <!-- <option value = "psa.sg">psa.sg</option> -->
                     </select>
                     
                     <!-- <div class="input-group-append">
