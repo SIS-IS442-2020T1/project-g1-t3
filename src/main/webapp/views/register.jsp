@@ -50,8 +50,19 @@
                     <input class="input100" type="text" id='email' name="username" placeholder="Email Address">
                     <span class="focus-input100" data-placeholder="&#xe82a;"></span>
 
-                    <select id = 'emailaddress' name = "email address" style='margin-left: 90%'>
+                    <select id = 'emailaddress' name = "email address" style='margin-left: 80%; width: auto'>
                     </select>
+                    
+                    <!-- <div class="input-group-append">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='margin-left:65%'>Dropdown</button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                          <div role="separator" class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                      </div> -->
     
                 </div>
                 <!-- Need to add select button -->
