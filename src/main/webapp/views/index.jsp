@@ -151,16 +151,27 @@
                     // Response is ready
                     // console.log('success');
                     // try{
-                    var json_obj = JSON.parse(request.responseText);
-                    console.log('response from findByEmail:' + json_obj);
-                    if (json_obj == null) {
+                    // var json_obj = JSON.parse(request.responseText);
+                    // console.log('response from findByEmail:' + json_obj);
+                    console.log(request.responseText);
+                    if(request.responseText==""){
                         var alert = `<div class="alert alert-danger">
                                      <strong>Error!</strong> Invalid email!
                                     </div>`;
-                    document.getElementById('alertMessage').innerHTML = alert;
-                    } else {
+                        document.getElementById('alertMessage').innerHTML = alert;
+
+                    }else {
+                        var json_obj = JSON.parse(request.responseText);
                         processLogin(json_obj);
                     }
+                    // if (json_obj == null) {
+                    //     var alert = `<div class="alert alert-danger">
+                    //                  <strong>Error!</strong> Invalid email!
+                    //                 </div>`;
+                    // document.getElementById('alertMessage').innerHTML = alert;
+                    // } else {
+                    //     processLogin(json_obj);
+                    // }
                     // }
                     // catch (err) {
                     //     console.log('error from findByEmail:' + err);
