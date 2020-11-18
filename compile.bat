@@ -1,1 +1,1 @@
-mvnw.cmd compile
+mvnw.cmd clean install

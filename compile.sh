@@ -1,1 +1,1 @@
-./mvnw compile
+./mvn clean install
