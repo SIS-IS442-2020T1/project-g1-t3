@@ -31,6 +31,8 @@
 
     <body>
         <div class="wm-main-wrapper">
+
+            <!-- ! ===================================== NAVBAR START ===================================== -->
             <!--// Header \\-->
             <header id="wm-header" class="wm-header-one">
                 <!--// TopStrip \\-->
@@ -49,7 +51,7 @@
                                     <li>
                                         <!-- <a href="#" class="wm-search-btn" data-toggle="modal" data-target="#ModalSearch"><i
                                                 class="wmicon-search"></i></a> -->
-                                    </li>
+                                    </li>   
                                 </ul>
                             </div>
                         </div>
@@ -59,8 +61,8 @@
                 <div class="wm-main-header">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-3"><a href="index.html" class="wm-logo" style='margin: 0px 0px 0px 0px'>
-                                <img src="login/images/psa-logo-white.png" width="130px" height="50px" alt="logo"></a>
+                            <div class="col-md-3" style='margin: 0px 0px 0px 0px'>
+                                <img src="login/images/psa-logo-white.png" width="130px" height="50px" alt="logo">
                             </div>
                                 <div class=" col-md-9">
                                     <!--// Navigation \\-->
@@ -115,8 +117,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div>  
+            <!-- ! ===================================== NAVBAR END ===================================== -->
             
             
             <div class='container'>
@@ -180,6 +182,8 @@
                 </div>
             </div>
 
+
+            <!-- ! ===================================== FOOTER =====================================-->
             <footerid="wm-footer" class="wm-footer-one">
             <!--// FooterNewsLatter \\-->
                 <div class="wm-footer-newslatter">
@@ -193,6 +197,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="wm-footer-widget" style=' padding-top:0px; padding-bottom:0px;'>
                     <div class="container">

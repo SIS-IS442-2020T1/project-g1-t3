@@ -3,35 +3,173 @@
     <!-- <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">  -->
     <head>
+        <!-- <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">  -->
+
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="login/images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="login/css/util.css">
-        <link rel="stylesheet" type="text/css" href="login/css/main.css">
-    <!--===============================================================================================-->
-    
+
+        <link href="main/css/bootstrap.css" rel="stylesheet">
+        <link href="main/css/font-awesome.css" rel="stylesheet">
+        <link href="main/css/flaticon.css" rel="stylesheet">
+        <link href="main/css/slick-slider.css" rel="stylesheet">
+        <link href="main/css/prettyphoto.css" rel="stylesheet">
+        <link href="main/build/mediaelementplayer.css" rel="stylesheet">
+        <link href="main/style.css" rel="stylesheet">
+        <link href="main/css/color.css" rel="stylesheet">
+        <link href="main/css/color-two.css" rel="stylesheet">
+        <link href="main/css/color-three.css" rel="stylesheet">
+        <link href="main/css/color-four.css" rel="stylesheet">
+        <link href="main/css/responsive.css" rel="stylesheet">
+
+        <title>Vessel Schedules</title>
+
     </head>
+    <body>
+        <div class="wm-main-wrapper">
+
+            <!-- ! ===================================== NAVBAR START ===================================== -->
+            <!--// Header \\-->
+            <header id="wm-header" class="wm-header-one">
+                <!--// TopStrip \\-->
+                <div class="wm-topstrip">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+    
+                                <ul class="wm-adminuser-section">
+                                    <li>
+                                        <a id="welcome" style='font-size: 15px;'>Hi, User.</a>
+                                    </li>
+                                    <li>
+    
+                                    </li>
+                                    <li>
+                                        <!-- <a href="#" class="wm-search-btn" data-toggle="modal" data-target="#ModalSearch"><i
+                                                class="wmicon-search"></i></a> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// MainHeader \\-->
+                <div class="wm-main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3"><a href="index.html" class="wm-logo" style='margin: 0px 0px 0px 0px'>
+                                <img src="login/images/psa-logo-white.png" width="130px" height="50px" alt="logo"></a>
+                            </div>
+                                <div class=" col-md-9">
+                                    <!--// Navigation \\-->
+                                    <nav class="navbar navbar-default">
+                                        <div class="navbar-header">
+                                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                                data-target="#navbar-collapse-1" aria-expanded="true">
+                                                <span class="sr-only">Toggle navigation</span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+                                        </div>
+                                        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                                            <ul class="nav navbar-nav" id="topNav">
+                                                <li>
+                                                    <a href="index.html">Main</a>
+                                                </li>
+    
+                                                <li>
+                                                    <a href="#" onclick=goFavoritePage()>Favourites</a>
+                                                </li>
+
+                                                <li class="wm-megamenu-li" id="logout">
+                                                    <a href="#" onclick="logout()">Logout</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// MainHeader \\-->
+            </header>
+             <!--// Header \\-->
+
+            <div class="wm-mini-header">
+                <span class="wm-blue-transparent"></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="wm-mini-title">
+                                <h1>Vessel Timings</h1>
+                            </div>
+                            <!-- <div class="wm-breadcrumb">
+                                <ul>
+                                    <li><a href="index-2.html">Main</a></li>
+                                    
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <!-- ! ===================================== NAVBAR END ===================================== -->
+
         
+
+
+
+            <!-- ! ===================================== FOOTER =====================================-->
+            <footerid="wm-footer" class="wm-footer-one">
+                <!--// FooterNewsLatter \\-->
+                    <div class="wm-footer-newslatter">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form>
+                                        <input type="submit" value="Copyrighted by Port of Singapore Authority">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="wm-footer-widget" style=' padding-top:0px; padding-bottom:0px;'>
+                        <div class="container">
+                            <div class="row">
+                                <aside class="widget widget_contact_info col-md-3" style='float: right; margin-botton:0px'>
+                                    <a href="https://www.globalpsa.com/" class="wm-footer-logo" style='margin-bottom:0px'><img src="login/images/psa-logo-white.png" alt="" width = "197px" height = "62px" ></a>
+                                    <ul>
+                                        <li><i class="wm-color wmicon-pin"></i> PSA Horizons,<br>
+                                            1 Harbour Drive, <br>Singapore 117352</li>
+                                        <li><i class="wm-color wmicon-phone"></i>  Tel +65 62747111</li>
+                                        <li><i class="wm-color wmicon-letter"></i> <a
+                                                href="https://www.globalpsa.com/contactus/">https://www.globalpsa.com/contactus</a></li>
+                                    </ul>
+                                
+                                </aside>
+
+                                <aside style='float:left; padding-top:65px'>
+                                    <a href='https://www.globalpsa.com/careers/'>
+                                    <img src="login/images/psa-banner.jpeg" alt="" width = "800px" height = "auto">
+                                    </a>
+                                </aside>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!--// FooterNewsLatter \\-->
+            </footer>
+        </div>
+    </body> 
+    
+    <!-- ! ========== BODY END =============== -->
     
     
 
