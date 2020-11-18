@@ -43,7 +43,7 @@
     
                                 <ul class="wm-adminuser-section">
                                     <li>
-                                        <a id="welcome" style='font-size: 15px;'>Hi, User.</a>
+                                        <a id="welcome" style='font-size: 15px;'>Welcome to PSA Portnet</a>
                                     </li>
                                     <li>
     
@@ -79,11 +79,14 @@
                                         <div class="collapse navbar-collapse" id="navbar-collapse-1">
                                             <ul class="nav navbar-nav" id="topNav">
                                                 <li>
-                                                    <a href="index.html">Main</a>
+                                                    <a href="#">Main</a>
                                                 </li>
     
                                                 <li>
                                                     <a href="#" onclick=goFavoritePage()>Favourites</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick='goSubscriptionPage()'>Subscription</a>
                                                 </li>
 
                                                 <li class="wm-megamenu-li" id="logout">
@@ -285,8 +288,13 @@
         filterAndDisplay();
 
         function goFavoritePage(){
-            window.location.replace("http://localhost:9100/myfavorite2");
+            window.location.replace("./myfavorite");
         }
+
+        function goSubscriptionPage(){
+                window.location.replace("./subscription");
+        }
+
 
         function logout(){
             sessionStorage.clear();
@@ -498,10 +506,13 @@
             // alert("adding");
             var request = new XMLHttpRequest();
             var url =``;
+            var alert = "";
             if(type == "F" ){
                 url = `http://localhost:9100/addFavorite`;
+              
             }else if(type == "S"){
                 url = `http://localhost:9100/addSubscription`;
+               
             }
             
 
@@ -521,7 +532,7 @@
                 if( this.readyState == 4 && this.status == 200 ) {
                     console.log('success');
                     $(ButtonId).prop("disabled",true);
-                    alert("added");
+                    alert("Successfully added");
                 }
                 else{
                     console.log(this.status);

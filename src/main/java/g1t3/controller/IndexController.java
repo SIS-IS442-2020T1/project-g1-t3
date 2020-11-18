@@ -27,6 +27,11 @@ public class IndexController {
         return "favorite2";
     }
 
+    @GetMapping("/subscription")
+    public String subscription() {
+        return "subscription";
+    }
+
     @GetMapping("/vesselschedules")
     public String vesselschedules(Model model) {
 //        model.addAttribute("email", "df@gmail.com");
