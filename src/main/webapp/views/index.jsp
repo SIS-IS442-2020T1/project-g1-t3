@@ -121,6 +121,7 @@
         window.location = './register';
         Redirect();
     }
+    
     function getEmail() {
         if(document.getElementById('email').value == "" || document.getElementById('password').value == ""){
             // alert("Please fill up all the field!");
@@ -129,44 +130,45 @@
                             </div>`;
             document.getElementById('alertMessage').innerHTML = alert;
         } else {
-        var email = document.getElementById('email').value;
-        console.log(email);
+            var email = document.getElementById('email').value;
+            // console.log(email);
 
-        // Step 1
-        var request = new XMLHttpRequest();
+            // Step 1
+            var request = new XMLHttpRequest();
 
-        var url = `http://localhost:9100/findByEmail/`+email;
-        console.log(url);
+            var url = `http://localhost:9100/findByEmail/`+email;
+            console.log(url);
 
-        request.open("GET", url, true);
-        request.send();
+            request.open("GET", url, true);
+            request.send();
 
 
-        // Step 2
-        // Register function
-        request.onreadystatechange = function() {
-            // Step 5
-            if( this.readyState == 4 && this.status == 200 ) {
-                // Response is ready
-                console.log('success');
-                try{
-                    var json_obj = JSON.parse(request.responseText);
-                    console.log(json_obj);
-                    processLogin(json_obj);
+            // Step 2
+            // Register function
+            request.onreadystatechange = function() {
+                // Step 5
+                if( this.readyState == 4 && this.status == 200 ) {
+                    // Response is ready
+                    // console.log('success');
+                    try{
+                        var json_obj = JSON.parse(request.responseText);
+                        console.log('response from findByEmail:' + json_obj);
+                        processLogin(json_obj);
+                    }
+                    catch (err) {
+                        console.log('error from findByEmail:' + err);
+                        // alert("Invalid email");
+                        var alert = `<div class="alert alert-danger">
+                                    <strong>Error!</strong> Invalid email!
+                                </div>`;
+                        document.getElementById('alertMessage').innerHTML = alert;
+                    }
+
                 }
-                catch (err) {
-                    // alert("Invalid email");
-                    var alert = `<div class="alert alert-danger">
-                                <strong>Error!</strong> Invalid email!
-                            </div>`;
-                    document.getElementById('alertMessage').innerHTML = alert;
+                else if( request.readyState == 4 && request.status == 404 ) {
+                    console.log('Fail to retrieve request');
                 }
-
             }
-            else if( request.readyState == 4 && request.status == 404 ) {
-                console.log('Fail to retrieve request');
-            }
-        }
         }
     }
 
@@ -176,14 +178,14 @@
 
             var input_password = document.getElementById('password').value;
 
-            console.log(input_password);
+            //console.log(input_password);
 
             var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
             hashObj.update(input_password);
             var hash = hashObj.getHash("HEX");
             input_password = hash;
 
-            console.log(input_password);
+            //console.log(input_password);
 
             if (actualPassword == input_password) {
                 // session.setAttribute("email", email);
